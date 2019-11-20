@@ -79,7 +79,7 @@ public class HttpSendMessage {
                         }
                     }
 
-                    logger.info("\n request http msg to -->{}<--,\n params:-->{}<--, \n finally send to server param string is -->{}<--",url,paramMap,builder.toString());
+                    logger.info("\n request http msg to -->{}<--,\n params:-->{}<--, \n finally send to contact param string is -->{}<--",url,paramMap,builder.toString());
 
                 }
             }

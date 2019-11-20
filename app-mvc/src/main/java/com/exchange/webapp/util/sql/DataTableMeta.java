@@ -1,4 +1,4 @@
-package com.crawler.webapp.util.sql;
+package com.exchange.webapp.util.sql;
 
 import java.util.List;
 
