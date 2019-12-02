@@ -2,7 +2,6 @@ package com.exchange.webapp.contact.dao;
 
 import com.exchange.webapp.contact.bean.ContactUser;
 import com.github.pagehelper.Page;
-import com.webapp.support.page.PageResult;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 public interface IContactDao {
 
     @Select("SELECT * FROM USER")
-    Page<ContactUser> pageContact(@Param("pageSize") String pageSize, @Param("pageNum") String pageNum);
+    Page<ContactUser> pageContact(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
 
     @Select("SELECT MAX(user_id)+1 FROM USER")
     int countuser();

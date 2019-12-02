@@ -21,9 +21,9 @@ public class ContactServiceImp implements ContactService {
     private IContactDao contactDao;
 
     @Override
-    public PageResult pageContact(String pageSize, String pageNum) {
-        logger.debug("当前页码:{},页面条数:{}",pageNum,pageSize);
-        Page<ContactUser> contactPageDatas = contactDao.pageContact(pageSize, pageNum);
+    public PageResult pageContact(int currPage,int pageSize){
+        logger.debug("当前页码:{},页面条数:{}",currPage,pageSize);
+        Page<ContactUser> contactPageDatas = contactDao.pageContact(currPage, pageSize);
         PageResult pageContactResult = PageResult.pageHelperList2PageResult(contactPageDatas);
         logger.debug("获取到的分页结果数据 --> {}",pageContactResult);
       //  logger.info("获取到的分页结果数据 --> {}",pageContactResult);

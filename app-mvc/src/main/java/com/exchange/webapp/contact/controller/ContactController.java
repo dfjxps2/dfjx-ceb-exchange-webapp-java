@@ -4,6 +4,8 @@ package com.exchange.webapp.contact.controller;
 import com.exchange.webapp.contact.bean.ContactUser;
 import com.exchange.webapp.contact.service.ContactService;
 import com.exchange.webapp.util.R;
+import com.webapp.support.json.JsonSupport;
+import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +32,19 @@ public class ContactController {
     @RequestMapping("/pageContact")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public R pageContact(
-            @RequestParam("currPage") String currPage,
-            @RequestParam("pageSize")String pageSize){
+    public String pageContact(
+            @RequestParam("currPage") int currPage,
+            @RequestParam("pageSize")int pageSize){
         PageResult pageResult = null;
+        String jsonResult = "";
         try{
              pageResult = contactService.pageContact(currPage,pageSize);
         }catch(Exception e){
-            return R.error(-1, "查询联系人管理列表有误！");
+            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "获取联系人管理列表失败", null, "error");
         }
+         jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取联系人管理列表成功", null, pageResult);
+        return jsonResult;
 
-        return R.ok("List",pageResult);
     }
 
 
@@ -48,16 +52,18 @@ public class ContactController {
     @RequestMapping("/pageContactselect")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public R pageContactselect(
+    public String pageContactselect(
             @RequestParam("user_id") String user_id){
-        List<ContactUser> contactPageDatas;
+        List<ContactUser> contactPageDatas = null;
+        String jsonResult = "";
         try{
             contactPageDatas = contactService.pageContactselect(user_id);
         }catch(Exception e){
-            return R.error(-1, "查询联系人有误！");
+            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询联系人失败", null, "error");
         }
+        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询联系人成功", null, contactPageDatas);
 
-        return R.ok().put("List",contactPageDatas);
+        return jsonResult;
     }
 
 
@@ -65,20 +71,22 @@ public class ContactController {
     @RequestMapping("/insertpageContact")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-        public R insertpageContact(
+        public String insertpageContact(
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
             @RequestParam("email")String email){
+        String jsonResult = "";
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
                 contactService.insertpageContact(user_name,mobile_phone,email);
             }catch(Exception e){
-                return R.error(-1, "新增联系人有误！");
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增联系人失败", null, "error");
             }
         }else{
-            return  R.error(-1,"请确认必填项是否填写内容！");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return R.ok();
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增联系人成功", null, "success");
+
     }
 
 
@@ -86,21 +94,22 @@ public class ContactController {
     @RequestMapping("/updatepageContact")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public R updatepageContact(
+    public String updatepageContact(
             @RequestParam("user_id") String user_id,
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
             @RequestParam("email")String email){
+        String jsonResult = "";
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
                 contactService.updatepageContact(user_id,user_name,mobile_phone,email);
             }catch(Exception e){
-                return R.error(-1, "修改联系人有误！");
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改联系人失败", null, "error");
             }
         }else{
-            return  R.error(-1,"请确认必填项是否填写内容！");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return R.ok();
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "修改联系人成功", null, "success");
     }
 
 
@@ -109,14 +118,15 @@ public class ContactController {
     @RequestMapping("/delpageContact")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public R delpageContact(
+    public String delpageContact(
             @RequestParam("user_id") String user_id){
-            try{
+        String jsonResult = "";
+        try{
                 contactService.delpageContact(user_id);
             }catch(Exception e){
-                return R.error(-1, "删除联系人有误！");
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除联系人失败", null, "error");
             }
-        return R.ok();
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除联系人成功", null, "success");
     }
 
 }

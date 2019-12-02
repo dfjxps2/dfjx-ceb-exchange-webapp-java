@@ -1,13 +1,11 @@
-package com.exchange.webapp.dataconsumption.controller;
+package com.exchange.webapp.applicationmanagement.controller;
 
-
-import com.exchange.webapp.dataconsumption.bean.DataConsumption;
-import com.exchange.webapp.dataconsumption.service.DataConsumptionService;
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
+import com.exchange.webapp.applicationmanagement.service.AppProjectManagementService;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,33 +13,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-/**
- * 数据消费Controller
- */
-@Controller
-@RequestMapping("/consumption")
-public class DataConsumptionController {
+public class AppProjectManagementController {
 
     @Autowired
-    private DataConsumptionService dataConsumptionService;
+    private AppProjectManagementService appProjectManagementService;
 
-
-
-
-    //数据消费管理列表
-    @RequestMapping("/dataconsumptionList")
+    //数据集管理列表
+    @RequestMapping("/apmanagementList")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String dataconsumptionList(
+    public String apmanagementList(
             @RequestParam("currPage") int currPage,
             @RequestParam("pageSize")int pageSize,
             @RequestParam("yyxm")String yyxm,
             @RequestParam("gjz")String gjz
-            ){
+    ){
         PageResult pageResult = null;
         String jsonResult = "";
         try{
-            pageResult = dataConsumptionService.dataconsumptionList(currPage,pageSize,yyxm,gjz);
+            pageResult = appProjectManagementService.apmanagementList(currPage,pageSize,yyxm,gjz);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
         }
@@ -50,20 +40,16 @@ public class DataConsumptionController {
 
 
 
-
-
-
-
-//查看
-    @RequestMapping("/dataconsumptionselect")
+    //查看
+    @RequestMapping("/apmanagementselect")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String dataconsumptionselect(
+    public String apmanagementselect(
             @RequestParam("user_id") String user_id){
-        List<DataConsumption> contactPageDatas;
+        List<AppProjectManagement> contactPageDatas;
         String jsonResult = "";
         try{
-            contactPageDatas = dataConsumptionService.dataconsumptionselect(user_id);
+            contactPageDatas = appProjectManagementService.apmanagementselect(user_id);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费查看失败", null, "error");
         }
@@ -72,10 +58,10 @@ public class DataConsumptionController {
 
 
     //新增
-    @RequestMapping("/insertdataconsumption")
+    @RequestMapping("/insertapmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String insertdataconsumption(
+    public String insertAPManagement(
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
             @RequestParam("email")String email){
@@ -83,7 +69,7 @@ public class DataConsumptionController {
 
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
-                dataConsumptionService.insertdataconsumption(user_name,mobile_phone,email);
+                appProjectManagementService.insertapmanagement(user_name,mobile_phone,email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据消费失败", null, "error");
             }
@@ -95,10 +81,10 @@ public class DataConsumptionController {
 
 
     //修改
-    @RequestMapping("/updatedataconsumption")
+    @RequestMapping("/updateapmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String updatedataconsumption(
+    public String updateapmanagement(
             @RequestParam("user_id") String user_id,
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
@@ -107,7 +93,7 @@ public class DataConsumptionController {
 
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
-                dataConsumptionService.updatedataconsumption(user_id,user_name,mobile_phone,email);
+                appProjectManagementService.updateapmanagement(user_id,user_name,mobile_phone,email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费修改失败", null, "error");
             }
@@ -120,19 +106,18 @@ public class DataConsumptionController {
 
 
     //删除
-    @RequestMapping("/delconsumption")
+    @RequestMapping("/delapmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String delpageContact(
+    public String delapmanagement(
             @RequestParam("user_id") String user_id){
         String jsonResult = "";
 
         try{
-            dataConsumptionService.delpageContact(user_id);
+            appProjectManagementService.delapmanagement(user_id);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
         }
         return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除成功", null, "error");
     }
-
 }

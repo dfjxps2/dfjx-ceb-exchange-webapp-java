@@ -1,8 +1,8 @@
-package com.exchange.webapp.dataconsumption.controller;
+package com.exchange.webapp.datasetmanagement.controller;
 
 
-import com.exchange.webapp.dataconsumption.bean.DataConsumption;
-import com.exchange.webapp.dataconsumption.service.DataConsumptionService;
+import com.exchange.webapp.datasetmanagement.bean.DatasetManagement;
+import com.exchange.webapp.datasetmanagement.service.DatasetManagementService;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
@@ -16,32 +16,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * 数据消费Controller
+ * 数据集管理Controller
  */
 @Controller
-@RequestMapping("/consumption")
-public class DataConsumptionController {
+@RequestMapping("/management")
+public class DatasetManagementController {
 
     @Autowired
-    private DataConsumptionService dataConsumptionService;
+    private DatasetManagementService datasetManagementService;
 
-
-
-
-    //数据消费管理列表
-    @RequestMapping("/dataconsumptionList")
+    //数据集管理列表
+    @RequestMapping("/datamanagementList")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String dataconsumptionList(
+    public String datamanagementList(
             @RequestParam("currPage") int currPage,
             @RequestParam("pageSize")int pageSize,
             @RequestParam("yyxm")String yyxm,
             @RequestParam("gjz")String gjz
-            ){
+    ){
         PageResult pageResult = null;
         String jsonResult = "";
         try{
-            pageResult = dataConsumptionService.dataconsumptionList(currPage,pageSize,yyxm,gjz);
+            pageResult = datasetManagementService.datamanagementList(currPage,pageSize,yyxm,gjz);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
         }
@@ -50,20 +47,16 @@ public class DataConsumptionController {
 
 
 
-
-
-
-
-//查看
-    @RequestMapping("/dataconsumptionselect")
+    //查看
+    @RequestMapping("/datamanagementselect")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String dataconsumptionselect(
+    public String datamanagementselect(
             @RequestParam("user_id") String user_id){
-        List<DataConsumption> contactPageDatas;
+        List<DatasetManagement> contactPageDatas;
         String jsonResult = "";
         try{
-            contactPageDatas = dataConsumptionService.dataconsumptionselect(user_id);
+            contactPageDatas = datasetManagementService.datamanagementselect(user_id);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费查看失败", null, "error");
         }
@@ -72,10 +65,10 @@ public class DataConsumptionController {
 
 
     //新增
-    @RequestMapping("/insertdataconsumption")
+    @RequestMapping("/insertmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String insertdataconsumption(
+    public String insertmanagement(
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
             @RequestParam("email")String email){
@@ -83,7 +76,7 @@ public class DataConsumptionController {
 
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
-                dataConsumptionService.insertdataconsumption(user_name,mobile_phone,email);
+                datasetManagementService.insertmanagement(user_name,mobile_phone,email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据消费失败", null, "error");
             }
@@ -95,10 +88,10 @@ public class DataConsumptionController {
 
 
     //修改
-    @RequestMapping("/updatedataconsumption")
+    @RequestMapping("/updatemanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String updatedataconsumption(
+    public String updatemanagement(
             @RequestParam("user_id") String user_id,
             @RequestParam("user_name") String user_name,
             @RequestParam("mobile_phone")String mobile_phone,
@@ -107,7 +100,7 @@ public class DataConsumptionController {
 
         if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
             try{
-                dataConsumptionService.updatedataconsumption(user_id,user_name,mobile_phone,email);
+                datasetManagementService.updatemanagement(user_id,user_name,mobile_phone,email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费修改失败", null, "error");
             }
@@ -120,15 +113,15 @@ public class DataConsumptionController {
 
 
     //删除
-    @RequestMapping("/delconsumption")
+    @RequestMapping("/delmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String delpageContact(
+    public String delmanagement(
             @RequestParam("user_id") String user_id){
         String jsonResult = "";
 
         try{
-            dataConsumptionService.delpageContact(user_id);
+            datasetManagementService.delmanagement(user_id);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
         }

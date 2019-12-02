@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ContactService {
 
-    PageResult pageContact(String pageSize,String pageNum);
+    PageResult pageContact(int currPage,int pageSize);
 
     void insertpageContact(String user_name, String mobile_phone, String email);
 
