@@ -8,10 +8,17 @@ import com.workbench.auth.authvalidate.bean.LoginResult;
 import com.workbench.auth.user.entity.UserStatus;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
+import com.workbench.shiro.WorkbenchShiroToken;
+import com.workbench.utils.TokenGenerator;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 /**
@@ -38,6 +45,16 @@ public class LoginServiceImp implements LoginService{
         User checkResult = userService.getUserByUserNm(userNm);
 
         return loginCheck(checkResult);
+    }
+
+    @Override
+    public String createToken(String userId) {
+
+        String tokenValue = TokenGenerator.generateValue();
+        AuthenticationToken tokenObj = new WorkbenchShiroToken(new User(),tokenValue);
+
+        SecurityUtils.getSubject().login(tokenObj);
+        return tokenValue;
     }
 
     private LoginResult loginCheck(User checkResult){

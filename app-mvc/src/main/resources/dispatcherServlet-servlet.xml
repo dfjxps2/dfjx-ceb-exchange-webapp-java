@@ -40,47 +40,4 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<!-- 配置jsp路径的前缀 -->
-		<property name="prefix" value="/template/" />
-		<property name="suffix" value=".html" />
-	</bean>
-	<mvc:resources location="/" mapping="/**/*.html"/>
-	<mvc:resources location="/" mapping="/**/*.js"/>
-	<mvc:resources location="/" mapping="/**/*.css"/>
-	<mvc:resources location="/" mapping="/**/*.png"/>
-	<!--<mvc:interceptors>-->
-		<!--<mvc:interceptor>-->
-			<!--<mvc:mapping path="/**/main.do" />-->
-			<!--<mvc:mapping path="/camp/campMag/addSave.do" />-->
-			<!--<mvc:mapping path="/camp/campMag/crtCamp.do" />-->
-			<!--<mvc:mapping path="/camp/campMag/sendTestMsg.do" />-->
-			<!--<mvc:mapping path="/camp/campMag/viewTestMsg.do" />-->
-			<!--<mvc:mapping path="/camp/campRec/listData.do" />-->
-			<!--<mvc:mapping path="/camp/campRec/recycle.do" />-->
-			<!--<mvc:mapping path="/camp/campView/copyEvtData.do" />-->
-			<!--<mvc:mapping path="/camp/campView/listMainData.do" />-->
-			<!--<mvc:mapping path="/camp/campView/listTagData.do" />-->
-			<!--<mvc:mapping path="/camp/campView/stopEvt.do" />-->
-			<!--<mvc:mapping path="/camp/campView/workflowCamp.do" />-->
-			<!--<mvc:mapping path="/sys/group/deleteGroupById.do" />-->
-			<!--<mvc:mapping path="/sys/group/modifyGroupActiveInd.do" />-->
-			<!--<mvc:mapping path="/sys/group/saveOneGroup.do" />-->
-			<!--<mvc:mapping path="/sys/mainframe.do" />-->
-			<!--<mvc:mapping path="/sys/modifyUserPwd.do" />-->
-			<!--<mvc:mapping path="/sys/user/deleteUserById.do" />-->
-			<!--<mvc:mapping path="/sys/user/findUserListByPageNoAdmin.do" />-->
-			<!--<mvc:mapping path="/sys/user/modifyUserActiveInd.do" />-->
-			<!--<mvc:mapping path="/sys/user/saveOneUser.do" />-->
-			<!--<mvc:mapping path="/sys/modifyUserPwd.do" />-->
-			<!--<mvc:mapping path="/usertags/tag/favors/cleanup.do" />-->
-			<!--<mvc:mapping path="/usertags/tag/favors/include/*.do" />-->
-			<!--<mvc:mapping path="/usertags/tag/favors/list.do" />-->
-			<!--<mvc:mapping path="/usertags/tag/favors/remove/*.do" />-->
-			<!--<mvc:mapping path="/usertags/tag/tagListFavor.do" />-->
-			<!--<mvc:mapping path="/files/**/*.do" />-->
-			<!--<mvc:mapping path="/files/*.do" />-->
-			<!--<bean class="com.evergrande.hdmp.sys.interceptor.SessionInterceptor"></bean>-->
-		<!--</mvc:interceptor>-->
-	<!--</mvc:interceptors>-->
 </beans>  

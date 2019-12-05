@@ -12,4 +12,6 @@ public interface LoginService {
 
     LoginResult validateMergePwd(String userNm);
 
+    String createToken(String userId);
+
 }

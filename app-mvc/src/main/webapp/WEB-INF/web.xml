@@ -8,9 +8,8 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath:applicationContext.xml,
-            <!--,-->
-            classpath:data-source-context.xml
-            <!--classpath:sms-provider.xml-->
+            classpath:data-source-context.xml,
+            classpath:shiroConfig.xml
         </param-value>
     </context-param>
     <context-param>
@@ -108,37 +107,10 @@
     <!--<welcome-file-list>-->
     <!--<welcome-file>sys/casLogin/doLogin.do</welcome-file>-->
     <!--</welcome-file-list>-->
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
     <!--<listener>-->
     <!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
     <!--</listener>-->
-    <servlet>
-        <servlet-name>dispatcherServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:dispatcherServlet-servlet.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
 
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
-    <!--<listener>-->
-    <!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
-    <!--</listener>-->
-    <servlet>
-        <servlet-name>dispatcherServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:dispatcherServlet-servlet.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
 
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -152,13 +124,62 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
+
+
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>shiroFilterRegistration</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:dispatcherServlet-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <!-- 设置true由servlet容器控制filter的生命周期 -->
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!-- 设置spring容器filter的bean id，如果不设置则找与filter-name一致的bean-->
+        <init-param>
+            <param-name>targetBeanName</param-name>
+            <param-value>shiroFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/*</url-pattern>

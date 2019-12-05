@@ -66,6 +66,19 @@ public class LoginController extends AbstractLoginController{
         return JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "登录成功",null, "LOGIN_SUCCESS");
     }
 
+
+    @RequestMapping("loginProcess")
+    @ResponseBody
+    @CrossOrigin(allowCredentials = "true")
+    public JsonResult loginProcess( String userName, String userPwd){
+        logger.info("用户登陆:{}",userName);
+
+        String tokenValue = loginService.createToken("1");
+
+        JsonResult sucessResult = JsonSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS, "登录成功", null, tokenValue);
+        return sucessResult;
+    }
+
     private void addUserToSession(String user_name) {
         User user = userService.getUserByUserNm(user_name);
         if(user==null){
