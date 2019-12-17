@@ -6,13 +6,14 @@ import com.webapp.support.page.PageResult;
 import java.util.List;
 
 public interface DataConsumptionService {
-    void delpageContact(String user_id);
+    void delpageContact(int cons_id,int flag);
 
-    PageResult dataconsumptionList(int currPage, int pageSize, String yyxm, String gjz);
+    PageResult dataconsumptionList(int currPage, int pageSize, String prj_cd, String cons_nm);
 
-    List<DataConsumption> dataconsumptionselect(String user_id);
 
-    void insertdataconsumption(String user_name, String mobile_phone, String email);
+    void insertdataconsumption(String cons_nm, String prj_cd, String dat_cd, String download_cron, String storage_path, String cons_desc, String flag);
 
-    void updatedataconsumption(String user_id, String user_name, String mobile_phone, String email);
+    void updatedataconsumption(int cons_id, String cons_nm, String prj_cd, String dat_cd, String download_cron, String storage_path, String cons_desc, String flag);
+
+    int yanzhengpath(String storage_path);
 }

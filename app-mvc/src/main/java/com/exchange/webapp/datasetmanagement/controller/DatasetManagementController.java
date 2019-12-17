@@ -6,6 +6,7 @@ import com.exchange.webapp.datasetmanagement.service.DatasetManagementService;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
+import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 数据集管理Controller
+ * Controller
  */
 @Controller
 @RequestMapping("/management")
@@ -32,13 +37,13 @@ public class DatasetManagementController {
     public String datamanagementList(
             @RequestParam("currPage") int currPage,
             @RequestParam("pageSize")int pageSize,
-            @RequestParam("yyxm")String yyxm,
-            @RequestParam("gjz")String gjz
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("bsornm")String bsornm
     ){
         PageResult pageResult = null;
         String jsonResult = "";
         try{
-            pageResult = datasetManagementService.datamanagementList(currPage,pageSize,yyxm,gjz);
+            pageResult = datasetManagementService.datamanagementList(currPage,pageSize,prj_cd,bsornm);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
         }
@@ -47,20 +52,19 @@ public class DatasetManagementController {
 
 
 
-    //查看
-    @RequestMapping("/datamanagementselect")
+    //数据集下拉
+    @RequestMapping("/datamanagementselectlist")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
-    public String datamanagementselect(
-            @RequestParam("user_id") String user_id){
+    public String datamanagementselectlist(){
         List<DatasetManagement> contactPageDatas;
         String jsonResult = "";
         try{
-            contactPageDatas = datasetManagementService.datamanagementselect(user_id);
+            contactPageDatas = datasetManagementService.datamanagementselectlist();
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费查看失败", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集查看失败", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据消费查看成功", null, contactPageDatas);
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集查看成功", null, contactPageDatas);
     }
 
 
@@ -69,21 +73,30 @@ public class DatasetManagementController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String insertmanagement(
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("dat_cd") String dat_cd,
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("dat_nm")String dat_nm,
+            @RequestParam("file_regexp")String file_regexp,
+            @RequestParam("dat_desc")String dat_desc){
         String jsonResult = "";
-
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+        boolean ss = false;
+        ss =  valid(file_regexp);
+        if (ss == false){return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
+        if(!dat_cd.isEmpty() && !prj_cd.isEmpty() && !dat_nm.isEmpty()  && !file_regexp.isEmpty()){
+            int  i=0;
+             i =   datasetManagementService.selectkeymanagement(dat_cd);
+            if(i != 0){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集标识已存在", null, "error");
+            }
             try{
-                datasetManagementService.insertmanagement(user_name,mobile_phone,email);
+                datasetManagementService.insertmanagement(dat_cd,prj_cd,dat_nm,file_regexp,dat_desc);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据消费失败", null, "error");
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据集失败", null, "error");
             }
         }else{
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增数据消费成功", null, "success");
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增数据集成功", null, "success");
     }
 
 
@@ -92,40 +105,85 @@ public class DatasetManagementController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String updatemanagement(
-            @RequestParam("user_id") String user_id,
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("dat_cd") String dat_cd,
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("dat_nm")String dat_nm,
+            @RequestParam("file_regexp")String file_regexp,
+            @RequestParam("dat_desc")String dat_desc){
         String jsonResult = "";
-
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+       // try{Window.RegExp('abc)')}catch(e){alert(e)}
+        boolean ss = false;
+        ss =  valid(file_regexp);
+        if (ss == false){return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
+        if(!dat_cd.isEmpty() && !prj_cd.isEmpty() && !dat_nm.isEmpty()  && !file_regexp.isEmpty()){
             try{
-                datasetManagementService.updatemanagement(user_id,user_name,mobile_phone,email);
+                datasetManagementService.updatemanagement(dat_cd,prj_cd,dat_nm,file_regexp,dat_desc);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费修改失败", null, "error");
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集修改失败", null, "error");
             }
         }else{
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据消费修改成功", null, "success");
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集修改成功", null, "success");
     }
 
 
 
-    //删除
+    //修改状态
     @RequestMapping("/delmanagement")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String delmanagement(
-            @RequestParam("user_id") String user_id){
+            @RequestParam("dat_cd") String dat_cd,
+            @RequestParam("flag") int flag
+    ){
         String jsonResult = "";
 
         try{
-            datasetManagementService.delmanagement(user_id);
+            datasetManagementService.delmanagement(dat_cd,flag);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
         }
-        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除成功", null, "error");
+        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, "success");
     }
+
+    //验证表达式是否有效
+    public static boolean valid(String expression) {
+        //定义一个栈数据结构
+        ArrayStack stack = new ArrayStack(expression.length());
+        //将符号按对应关系放到map里面，方便后面根据开始 符号取对应的结束符号
+        Map<String, String> map = new HashMap<>();
+        map.put("{", "}");
+        map.put("[", "]");
+        map.put("(", ")");
+        char[] exp = expression.toCharArray();
+        for (int i = 0; i < exp.length; i++) {
+            //如果是开始符号，则压入栈
+            if(exp[i] == '{' || exp[i] == '[' || exp[i] == '(') {
+                stack.push(exp[i]);
+            }
+            //如果是结束符号，则判断当前栈顶元素和该结束符号是否是对应关系
+            if(exp[i] == '}' || exp[i] == ']' || exp[i] == ')') {
+                String c = String.valueOf(stack.pop());
+                if(exp[i] != map.get(c).toCharArray()[0]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+   /* public static void main(String[] args) {
+        String s = "{}(([{}])){}{}";
+        System.out.println(valid(s));
+    }
+*/
+  /*  String expression = "...";
+    ScriptEngineManager mgr = new ScriptEngineManager();*/
+
+
+
 
 }

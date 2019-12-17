@@ -1,58 +1,72 @@
 package com.exchange.webapp.contact.bean;
 
 public class ContactUser {
-    private String user_id;
-    private String user_name;
-    private String mobile_phone;
-    private String email;
-    private String reg_date;
-    private String last_login_time;
+    private String person_id;
+    private String person_nm;
+    private String person_tel;
+    private String person_email;
+    private String create_time;
+    private String update_time;
 
-    public String getReg_date() {
-        return reg_date;
+
+    public String getPerson_id() {
+        return person_id;
     }
 
-    public void setReg_date(String reg_date) {
-        this.reg_date = reg_date;
+    public void setPerson_id(String person_id) {
+        this.person_id = person_id;
     }
 
-    public String getLast_login_time() {
-        return last_login_time;
+    public String getPerson_nm() {
+        return person_nm;
     }
 
-    public void setLast_login_time(String last_login_time) {
-        this.last_login_time = last_login_time;
+    public void setPerson_nm(String person_nm) {
+        this.person_nm = person_nm;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getPerson_tel() {
+        return person_tel;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setPerson_tel(String person_tel) {
+        this.person_tel = person_tel;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPerson_email() {
+        return person_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPerson_email(String person_email) {
+        this.person_email = person_email;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getCreate_time() {
+        return create_time;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 
-    public String getMobile_phone() {
-        return mobile_phone;
+    public String getUpdate_time() {
+        return update_time;
     }
 
-    public void setMobile_phone(String mobile_phone) {
-        this.mobile_phone = mobile_phone;
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ContactUser{" +
+                "person_id='" + person_id + '\'' +
+                ", person_nm='" + person_nm + '\'' +
+                ", person_tel='" + person_tel + '\'' +
+                ", person_email='" + person_email + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", update_time='" + update_time + '\'' +
+                '}';
     }
 }

@@ -31,24 +31,29 @@ public class ContactServiceImp implements ContactService {
     }
 
     @Override
-    public void insertpageContact( String user_name, String mobile_phone, String email) {
-          int  uuid = contactDao.countuser();
-        contactDao.insertpageContact(uuid,user_name,mobile_phone,email);
+    public void insertpageContact( String person_nm, String person_tel, String person_email) {
+          int  person_id = contactDao.countuser();
+        contactDao.insertpageContact(person_id,person_nm,person_tel,person_email);
     }
 
     @Override
-    public void updatepageContact(String user_id, String user_name, String mobile_phone, String email) {
-        contactDao.updatepageContact(user_id,user_name,mobile_phone,email);
+    public void updatepageContact(int person_id, String person_nm, String person_tel, String person_email) {
+        contactDao.updatepageContact(person_id,person_nm,person_tel,person_email);
     }
 
     @Override
-    public void delpageContact(String user_id) {
-        contactDao.delpageContact(user_id);
+    public void delpageContact(int person_id) {
+        contactDao.delpageContact(person_id);
     }
 
     @Override
-    public List<ContactUser> pageContactselect(String user_id) {
-        return contactDao.pageContactselect(user_id);
+    public List<ContactUser> pageContactselect(int person_id) {
+        return contactDao.pageContactselect(person_id);
+    }
+
+    @Override
+    public List<ContactUser> pageContactsxiala() {
+        return contactDao.pageContactsxiala();
     }
 
 

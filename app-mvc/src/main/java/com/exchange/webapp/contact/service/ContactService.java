@@ -9,11 +9,13 @@ public interface ContactService {
 
     PageResult pageContact(int currPage,int pageSize);
 
-    void insertpageContact(String user_name, String mobile_phone, String email);
+    void insertpageContact(String person_nm, String person_tel, String person_email);
 
-    void updatepageContact(String user_id, String user_name, String mobile_phone, String email);
+    void updatepageContact(int person_id, String person_nm, String person_tel, String person_email);
 
-    void delpageContact(String user_id);
+    void delpageContact(int person_id);
 
-    List<ContactUser> pageContactselect(String user_id);
+    List<ContactUser> pageContactselect(int person_id);
+
+    List<ContactUser> pageContactsxiala();
 }

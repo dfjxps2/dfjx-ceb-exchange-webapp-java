@@ -25,33 +25,37 @@ public class AppProjectManagementServiceImp  implements AppProjectManagementServ
 
 
     @Override
-    public PageResult apmanagementList(int currPage, int pageSize, String yyxm, String gjz) {
+    public PageResult apmanagementList(int currPage, int pageSize) {
         logger.debug("当前页码:{},页面条数:{}",currPage,pageSize);
-        Page<AppProjectManagement> contactPageDatas = appProjectManagementDao.apmanagementList(currPage, pageSize,yyxm,gjz);
+        Page<AppProjectManagement> contactPageDatas = appProjectManagementDao.apmanagementList(currPage, pageSize);
         PageResult pageContactResult = PageResult.pageHelperList2PageResult(contactPageDatas);
         logger.debug("获取到的分页结果数据 --> {}",pageContactResult);
         return pageContactResult;
     }
 
     @Override
-    public List<AppProjectManagement> apmanagementselect(String user_id) {
-        return  appProjectManagementDao.apmanagementselect(user_id);
+    public List<AppProjectManagement> apmanagementselect(String prj_cd) {
+        return  appProjectManagementDao.apmanagementselect(prj_cd);
     }
 
     @Override
-    public void insertapmanagement(String user_name, String mobile_phone, String email) {
-        int  uuid = appProjectManagementDao.countuser();
-        appProjectManagementDao.insertapmanagement(uuid,user_name,mobile_phone,email);
+    public void insertapmanagement(String prj_cd,int person_id, String prj_nm, String prj_desc){
+        appProjectManagementDao.insertapmanagement(prj_cd,person_id,prj_nm,prj_desc);
     }
 
     @Override
-    public void updateapmanagement(String user_id, String user_name, String mobile_phone, String email) {
-        appProjectManagementDao.updateapmanagement(user_id,user_name,mobile_phone,email);
+    public void updateapmanagement(int person_id, String prj_nm, String prj_desc,String prj_cd) {
+        appProjectManagementDao.updateapmanagement(person_id,prj_nm,prj_desc,prj_cd);
     }
 
     @Override
-    public void delapmanagement(String user_id) {
-        appProjectManagementDao.delapmanagement(user_id);
+    public void delapmanagement(String prj_cd) {
+        appProjectManagementDao.delapmanagement(prj_cd);
 
+    }
+
+    @Override
+    public List<AppProjectManagement> apmanagementselectlist() {
+        return appProjectManagementDao.apmanagementselectlist();
     }
 }
