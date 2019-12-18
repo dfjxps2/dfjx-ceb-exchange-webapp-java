@@ -11,6 +11,7 @@ import com.workbench.auth.authvalidate.controller.CasLoginController;
 import com.workbench.auth.authvalidate.controller.LoginController;
 import com.workbench.auth.user.entity.User;
 import com.workbench.exception.runtime.NotLoginException;
+import com.workbench.shiro.WorkbenchShiroUtils;
 import com.workbench.spring.aop.params.LoginFilterLevel;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -55,7 +56,7 @@ public class SystemLogAspect {
             }else{
                 Object targer = joinPoint.getTarget();
                 if(!(targer instanceof AbstractLoginController)){
-                    Object user = SessionSupport.checkoutUserFromSession();
+                    Object user = WorkbenchShiroUtils.checkUserFromShiroContext();
                     Object[] allArgs = joinPoint.getArgs();
                     logger.info("User:-->{}<-- called method:-->{}<--,the param values-->{}<--",user,joinPoint.toString(),allArgs);
                 }

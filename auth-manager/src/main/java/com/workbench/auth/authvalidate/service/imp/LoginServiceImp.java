@@ -38,7 +38,7 @@ public class LoginServiceImp implements LoginService{
         User checkResult = userService.checkUser(userNm, password);
 
         return loginCheck(checkResult);
-//        return null;
+//        return null;createToken
     }
 
     public LoginResult validateMergePwd(String userNm){
@@ -53,7 +53,7 @@ public class LoginServiceImp implements LoginService{
         String tokenValue = TokenGenerator.generateValue();
         AuthenticationToken tokenObj = new WorkbenchShiroToken(new User(),tokenValue);
 
-        SecurityUtils.getSubject().login(tokenObj);
+//        SecurityUtils.getSubject().login(tokenObj);
         return tokenValue;
     }
 

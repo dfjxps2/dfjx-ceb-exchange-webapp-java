@@ -14,6 +14,10 @@
     <bean id="workbenchShiroRealm" class="com.workbench.shiro.WorkbenchShiroRealm">
         <!--<property name="authenticationTokenClass" value="com.workbench.shiro.WorkbenchShiroToken"></property>-->
         <property name="authenticationTokenClass" value="org.apache.shiro.authc.AuthenticationToken"></property>
+        <property name="cachingEnabled" value="true"></property>
+        <property name="authorizationCachingEnabled" value="true"></property>
+        <property name="authenticationCacheName" value="authenticationCache"></property>
+        <property name="authorizationCacheName" value="authorizationCache"></property>
     </bean>
 
     <!-- token创建以及验证成功|失败处理 -->
@@ -25,9 +29,12 @@
         <property name="securityManager" ref="securityManager" />
     </bean>
 
+    <bean id="ehCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"></bean>
+
     <bean id="securityManager"
           class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="workbenchShiroRealm"/>
+        <property name="cacheManager" ref="ehCacheManager"/>
     </bean>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -36,15 +43,15 @@
         <property name="filters">
             <map>
                 <!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中-->
-                <entry key="oauth2" value-ref="workbenchShiroAuthFilter" />
+                <entry key="workShiroFilter" value-ref="workbenchShiroAuthFilter" />
             </map>
         </property>
 
         <!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
         <property name="filterChainDefinitions">
             <value>
-                /sys/login/loginProcess.do = anon
-                /** = oauth2
+                /sys/login/doLogin.do = anon
+                /** = workShiroFilter
             </value>
         </property>
     </bean>

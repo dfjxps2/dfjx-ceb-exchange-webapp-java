@@ -32,8 +32,6 @@ public class WorkbenchShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.debug("do get authorization info is running.....");
-
-
         SimpleAuthorizationInfo authenticationInfo = new SimpleAuthorizationInfo();
         return authenticationInfo;
     }
@@ -46,9 +44,6 @@ public class WorkbenchShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        Object shiroPrincipal = authenticationToken.getPrincipal();
-        logger.debug("Shiro Principal info is {}",shiroPrincipal);
-
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(authenticationToken.getPrincipal(),authenticationToken.getCredentials(),this.getName());
         return authenticationInfo;
     }

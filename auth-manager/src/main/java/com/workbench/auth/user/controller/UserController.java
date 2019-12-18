@@ -9,6 +9,7 @@ import com.workbench.auth.menu.entity.Menu;
 import com.workbench.auth.user.entity.UserStatus;
 import com.workbench.auth.user.service.UserService;
 import com.workbench.auth.user.entity.User;
+import com.workbench.shiro.WorkbenchShiroUtils;
 import com.workbench.spring.aop.annotation.JsonpCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +70,7 @@ public class UserController {
     @JsonpCallback
     @CrossOrigin(allowCredentials="true")
     public String getMenuList4User(){
-        User user = SessionSupport.checkoutUserFromSession();
+        User user = WorkbenchShiroUtils.checkUserFromShiroContext();
         JsonResult jsonResult = JsonResult.getInstance();
         if(user!=null){
             List<Menu> allMenu = userService.getMenuList4User(user.getUser_name());
@@ -159,7 +160,7 @@ public class UserController {
 
         userService.changePwd(userDb.getUser_id(),userPwd);
 
-        User userFromSession = SessionSupport.checkoutUserFromSession();
+        User userFromSession = WorkbenchShiroUtils.checkUserFromShiroContext();
         userFromSession.setUser_status(String.valueOf(UserStatus.NORMAL.getStatus()));
 
         JsonResult jsonResult = JsonSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS, "修改成功",
