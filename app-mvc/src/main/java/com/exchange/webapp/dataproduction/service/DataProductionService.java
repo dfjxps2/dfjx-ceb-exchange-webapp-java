@@ -7,14 +7,17 @@ import java.util.List;
 
 
 public interface DataProductionService {
+    PageResult dataproductionList(int currPage, int pageSize, String prj_cd, String prod_nm);
 
-    PageResult dataproductionList(int currPage, int pageSize, String yyxm, String gjz);
+    List<DataProduction> dataproductionselect(String prod_id);
 
-    List<DataProduction> dataproductionselect(String user_id);
+    void delproduction(int prod_id,int flag);
 
-    void insertdataproduction(String user_name, String mobile_phone, String email);
+    void insertdataproduction(String prod_nm, String dat_cd, String prj_cd, String create_cron, String upload_cron, String storage_path, String flag);
 
-    void updatedataproduction(String user_id, String user_name, String mobile_phone, String email);
+    void updatedataproduction(int prod_id, String prod_nm, String dat_cd, String prj_cd, String create_cron, String upload_cron, String storage_path, String flag);
 
-    void delproduction(String user_id);
+    int yanzhengpath(String storage_path);
+
+    List<DataProduction> dataproductionselectxff(String prod_id);
 }

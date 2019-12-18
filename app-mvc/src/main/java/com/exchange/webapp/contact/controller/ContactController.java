@@ -53,15 +53,33 @@ public class ContactController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String pageContactselect(
-            @RequestParam("user_id") String user_id){
+            @RequestParam("person_id") int person_id){
         List<ContactUser> contactPageDatas = null;
         String jsonResult = "";
         try{
-            contactPageDatas = contactService.pageContactselect(user_id);
+            contactPageDatas = contactService.pageContactselect(person_id);
         }catch(Exception e){
             jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询联系人失败", null, "error");
         }
         jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询联系人成功", null, contactPageDatas);
+
+        return jsonResult;
+    }
+
+
+    //联系人下拉框  （应用管理新增）
+    @RequestMapping("/pageContactsxiala")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String pageContactsxiala(){
+        List<ContactUser> contactPageDatas = null;
+        String jsonResult = "";
+        try{
+            contactPageDatas = contactService.pageContactsxiala();
+        }catch(Exception e){
+            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
+        }
+        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
 
         return jsonResult;
     }
@@ -72,13 +90,13 @@ public class ContactController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
         public String insertpageContact(
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("person_nm") String person_nm,
+            @RequestParam("person_tel")String person_tel,
+            @RequestParam("person_email")String person_email){
         String jsonResult = "";
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+        if(!person_nm.isEmpty() && !person_tel.isEmpty() && !person_email.isEmpty()){
             try{
-                contactService.insertpageContact(user_name,mobile_phone,email);
+                contactService.insertpageContact(person_nm,person_tel,person_email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增联系人失败", null, "error");
             }
@@ -90,19 +108,20 @@ public class ContactController {
     }
 
 
+
     //修改联系人
     @RequestMapping("/updatepageContact")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String updatepageContact(
-            @RequestParam("user_id") String user_id,
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("person_id") int person_id,
+            @RequestParam("person_nm") String person_nm,
+            @RequestParam("person_tel")String person_tel,
+            @RequestParam("person_email")String person_email){
         String jsonResult = "";
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+        if(!person_nm.isEmpty() && !person_tel.isEmpty() && !person_email.isEmpty()){
             try{
-                contactService.updatepageContact(user_id,user_name,mobile_phone,email);
+                contactService.updatepageContact(person_id,person_nm,person_tel,person_email);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改联系人失败", null, "error");
             }
@@ -119,10 +138,10 @@ public class ContactController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String delpageContact(
-            @RequestParam("user_id") String user_id){
+            @RequestParam("person_id") int person_id){
         String jsonResult = "";
         try{
-                contactService.delpageContact(user_id);
+                contactService.delpageContact(person_id);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除联系人失败", null, "error");
             }

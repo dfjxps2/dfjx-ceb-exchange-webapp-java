@@ -3,9 +3,11 @@ package com.exchange.webapp.dataproduction.controller;
 
 import com.exchange.webapp.dataproduction.bean.DataProduction;
 import com.exchange.webapp.dataproduction.service.DataProductionService;
+import com.sun.tools.javac.util.Assert;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
+import org.apache.http.util.Asserts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -33,13 +36,13 @@ public class DataProductionController {
     public String dataproductionList(
             @RequestParam("currPage") int currPage,
             @RequestParam("pageSize")int pageSize,
-            @RequestParam("yyxm")String yyxm,
-            @RequestParam("gjz")String gjz
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("prod_nm")String prod_nm
     ){
         PageResult pageResult = null;
         String jsonResult = "";
         try{
-            pageResult = dataProductionService.dataproductionList(currPage,pageSize,yyxm,gjz);
+            pageResult = dataProductionService.dataproductionList(currPage,pageSize,prj_cd,prod_nm);
         }catch(Exception e){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
         }
@@ -53,31 +56,77 @@ public class DataProductionController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String dataproductionselect(
-            @RequestParam("user_id") String user_id){
+            @RequestParam("prod_id") String prod_id){
         List<DataProduction> contactPageDatas;
         String jsonResult = "";
-        try{
-            contactPageDatas = dataProductionService.dataproductionselect(user_id);
-        }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费查看失败", null, "error");
+        if ("".equals(prod_id)){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "生产计划ID为空", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据消费查看成功", null, contactPageDatas);
+        try{
+            contactPageDatas = dataProductionService.dataproductionselect(prod_id);
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据查看失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据查看成功", null, contactPageDatas);
     }
 
 
-    //新增
+    //查看数据消费方
+    @RequestMapping("/dataproductionselectxff")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String dataproductionselectxff(
+            @RequestParam("prod_id") String prod_id){
+        List<DataProduction> contactPageDatas;
+        String jsonResult = "";
+        try{
+            contactPageDatas = dataProductionService.dataproductionselectxff(prod_id);
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费方查看失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据消费方查看成功", null, contactPageDatas);
+    }
+
+
+    //新增生产
     @RequestMapping("/insertdataproduction")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String insertdataproduction(
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("prod_nm") String prod_nm,
+            @RequestParam("dat_cd")String dat_cd,
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("create_cron")String create_cron,
+            @RequestParam("upload_cron")String upload_cron,
+            @RequestParam("storage_path")String storage_path,
+            @RequestParam("flag")String flag){
         String jsonResult = "";
-
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+        if(!prod_nm.isEmpty() && !dat_cd.isEmpty() && !prj_cd.isEmpty() && !create_cron.isEmpty() && !upload_cron.isEmpty() && !storage_path.isEmpty() ){
             try{
-                dataProductionService.insertdataproduction(user_name,mobile_phone,email);
+                //String data  = "* 0/1 7-23 * * ?";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                CronExpression cronExpression = new CronExpression(create_cron);
+                boolean resCron = cronExpression.isSatisfiedBy(simpleDateFormat.parse("2018-04-27 16:00:00"));
+            }catch(Exception e){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
+            }
+            try{
+                //String data  = "* 0/1 7-23 * * ?";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                CronExpression cronExpression = new CronExpression(upload_cron);
+                boolean resCron = cronExpression.isSatisfiedBy(simpleDateFormat.parse("2018-04-27 16:00:00"));
+            }catch(Exception e){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
+            }
+
+
+            int ss = 0;
+            ss =   dataProductionService.yanzhengpath(storage_path);
+            if(ss == 0){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "存储路径有误！", null, "error");
+            }
+            try{
+                dataProductionService.insertdataproduction(prod_nm,dat_cd,prj_cd,create_cron,upload_cron,storage_path,flag);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据消费失败", null, "error");
             }
@@ -93,15 +142,41 @@ public class DataProductionController {
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String updatedataproduction(
-            @RequestParam("user_id") String user_id,
-            @RequestParam("user_name") String user_name,
-            @RequestParam("mobile_phone")String mobile_phone,
-            @RequestParam("email")String email){
+            @RequestParam("prod_id") int prod_id,
+            @RequestParam("prod_nm") String prod_nm,
+            @RequestParam("dat_cd")String dat_cd,
+            @RequestParam("prj_cd")String prj_cd,
+            @RequestParam("create_cron")String create_cron,
+            @RequestParam("upload_cron")String upload_cron,
+            @RequestParam("storage_path")String storage_path,
+            @RequestParam("flag")String flag){
         String jsonResult = "";
-
-        if(!user_name.isEmpty() && !mobile_phone.isEmpty() && !email.isEmpty()){
+        if(!prod_nm.isEmpty() && !dat_cd.isEmpty() && !prj_cd.isEmpty() && !create_cron.isEmpty() && !upload_cron.isEmpty() && !storage_path.isEmpty()){
             try{
-                dataProductionService.updatedataproduction(user_id,user_name,mobile_phone,email);
+                //String data  = "* 0/1 7-23 * * ?";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                CronExpression cronExpression = new CronExpression(create_cron);
+                boolean resCron = cronExpression.isSatisfiedBy(simpleDateFormat.parse("2018-04-27 16:00:00"));
+            }catch(Exception e){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
+            }
+            try{
+                //String data  = "* 0/1 7-23 * * ?";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                CronExpression cronExpression = new CronExpression(upload_cron);
+                boolean resCron = cronExpression.isSatisfiedBy(simpleDateFormat.parse("2018-04-27 16:00:00"));
+            }catch(Exception e){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
+            }
+
+
+            int ss = 0;
+            ss =   dataProductionService.yanzhengpath(storage_path);
+            if(ss == 0){
+                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "存储路径有误！", null, "error");
+            }
+            try{
+                dataProductionService.updatedataproduction(prod_id,prod_nm,dat_cd,prj_cd,create_cron,upload_cron,storage_path,flag);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费修改失败", null, "error");
             }
@@ -113,20 +188,43 @@ public class DataProductionController {
 
 
 
-    //删除
+    //修改状态
     @RequestMapping("/delproduction")
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String delproduction(
-            @RequestParam("user_id") String user_id){
+            @RequestParam("prod_id") int prod_id,
+            @RequestParam("flag")int flag
+            ){
         String jsonResult = "";
 
         try{
-            dataProductionService.delproduction(user_id);
+            dataProductionService.delproduction(prod_id,flag);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改失败", null, "error");
         }
-        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除成功", null, "error");
+        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "修改成功", null, "success");
     }
+
+
+
+
+    @RequestMapping("/cron")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public static String cron(String data) throws Exception {
+        String jsonResult = "";
+        try{
+            //String data  = "* 0/1 7-23 * * ?";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            CronExpression cronExpression = new CronExpression(data);
+            boolean resCron = cronExpression.isSatisfiedBy(simpleDateFormat.parse("2018-04-27 16:00:00"));
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
+        }
+        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "cron表达式正确", null, "success");
+
+    }
+
 
 }

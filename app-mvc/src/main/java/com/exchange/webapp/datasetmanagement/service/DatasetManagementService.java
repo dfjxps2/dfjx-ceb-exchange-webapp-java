@@ -6,13 +6,15 @@ import com.webapp.support.page.PageResult;
 import java.util.List;
 
 public interface DatasetManagementService {
-    PageResult datamanagementList(int currPage, int pageSize, String yyxm, String gjz);
+   PageResult datamanagementList(int currPage, int pageSize, String prj_cd, String bsornm);
 
-    List<DatasetManagement> datamanagementselect(String user_id);
+    void insertmanagement(String dat_cd, String prj_cd, String dat_nm, String file_regexp, String dat_desc);
 
-    void insertmanagement(String user_name, String mobile_phone, String email);
+    void updatemanagement(String dat_cd, String prj_cd, String dat_nm, String file_regexp, String dat_desc);
 
-    void updatemanagement(String user_id, String user_name, String mobile_phone, String email);
+    void delmanagement(String dat_cd,int flag);
 
-    void delmanagement(String user_id);
+    List<DatasetManagement> datamanagementselectlist();
+
+    int selectkeymanagement(String dat_cd);
 }

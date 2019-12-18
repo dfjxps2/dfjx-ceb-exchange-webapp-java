@@ -6,13 +6,15 @@ import com.webapp.support.page.PageResult;
 import java.util.List;
 
 public interface AppProjectManagementService {
-    PageResult apmanagementList(int currPage, int pageSize, String yyxm, String gjz);
+    PageResult apmanagementList(int currPage, int pageSize);
 
-    List<AppProjectManagement> apmanagementselect(String user_id);
+    List<AppProjectManagement> apmanagementselect(String prj_cd);
 
-    void insertapmanagement(String user_name, String mobile_phone, String email);
+    void insertapmanagement(String prj_cd,int person_id, String prj_nm, String prj_desc);
 
-    void updateapmanagement(String user_id, String user_name, String mobile_phone, String email);
+    void updateapmanagement(int person_id, String prj_nm, String prj_desc,String prj_cd);
 
-    void delapmanagement(String user_id);
+    void delapmanagement(String prj_cd);
+
+    List<AppProjectManagement> apmanagementselectlist();
 }
