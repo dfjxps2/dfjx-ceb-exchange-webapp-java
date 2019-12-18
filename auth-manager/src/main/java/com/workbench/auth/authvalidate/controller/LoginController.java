@@ -1,6 +1,7 @@
 package com.workbench.auth.authvalidate.controller;
 
 import com.google.common.base.Strings;
+import com.webapp.support.encryption.MD5;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.workbench.auth.authvalidate.service.LoginService;
@@ -55,9 +56,10 @@ public class LoginController extends AbstractLoginController{
         }else{
             LoginResult loginResult = loginService.validate(user_name, user_pwd);
             if(loginResult.getResult_code()!=LoginResult.LOGIN_RESULT.SUCCESS){
-                user = userService.getUserByUserNm(user_name);
-                tokenValue = loginService.createToken(String.valueOf(user.getUser_id()));
+
                 if(LoginResult.LOGIN_RESULT.PWD_EXPIRED.equals(loginResult.getResult_code())){
+                    user = userService.getUserByUserNm(user_name);
+                    tokenValue = loginService.createToken(String.valueOf(user.getUser_id()));
                     loginResultData.put("RESULT",LoginResult.LOGIN_RESULT.PWD_EXPIRED);
                     loginResultData.put("TOKEN",tokenValue);
                     return JsonSupport.makeJsonpResult(JsonResult.RESULT.SUCCESS, "登陆成功,密码过期需要修改",
