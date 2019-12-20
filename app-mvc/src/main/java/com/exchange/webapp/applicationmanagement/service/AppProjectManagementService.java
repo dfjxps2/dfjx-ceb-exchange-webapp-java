@@ -17,4 +17,6 @@ public interface AppProjectManagementService {
     void delapmanagement(String prj_cd);
 
     List<AppProjectManagement> apmanagementselectlist();
+
+    int selectprj_cd(String prj_cd);
 }

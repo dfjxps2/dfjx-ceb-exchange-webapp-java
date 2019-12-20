@@ -58,4 +58,9 @@ public class AppProjectManagementServiceImp  implements AppProjectManagementServ
     public List<AppProjectManagement> apmanagementselectlist() {
         return appProjectManagementDao.apmanagementselectlist();
     }
+
+    @Override
+    public int selectprj_cd(String prj_cd) {
+        return appProjectManagementDao.selectprj_cd(prj_cd);
+    }
 }

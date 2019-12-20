@@ -87,7 +87,12 @@ public class AppProjectManagementController {
             @RequestParam("prj_nm")String prj_nm,
             @RequestParam("prj_desc")String prj_desc){
         String jsonResult = "";
-
+        int sd = 0;
+        //查询项目标识是否已存在
+        sd =   appProjectManagementService.selectprj_cd(prj_cd);
+        if (sd == 0){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "此应用项目标识已存在", null, "error");
+        }
         if(!prj_cd.isEmpty() && !prj_nm.isEmpty()){
             try{
                 appProjectManagementService.insertapmanagement(prj_cd,person_id,prj_nm,prj_desc);

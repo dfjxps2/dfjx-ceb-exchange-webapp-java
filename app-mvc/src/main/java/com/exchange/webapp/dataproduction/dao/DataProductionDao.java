@@ -23,7 +23,7 @@ public interface DataProductionDao {
             "  \ta.flag\n" +
             " FROM  " +
             "\ttb_product a\n" +
-            "INNER JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
+            "LEFT JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
             "LEFT JOIN tb_data c ON c.dat_cd = a.dat_cd\n" +
             "LEFT JOIN tb_person d ON d.person_id = b.person_id" +
             "\t   where  1 = 1" +
@@ -69,7 +69,7 @@ public interface DataProductionDao {
             "\ta.flag\n" +
             "FROM\n" +
             "\ttb_product a\n" +
-            "INNER JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
+            "LEFT JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
             "LEFT JOIN tb_data c ON c.dat_cd = a.dat_cd\n" +
             "LEFT JOIN tb_person d ON d.person_id = b.person_id\n" +
             "WHERE\n" +
@@ -91,7 +91,7 @@ public interface DataProductionDao {
             "\tf.prj_nm scnm\n" +
             "FROM\n" +
             "\ttb_product a\n" +
-            "INNER JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
+            "LEFT JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
             "LEFT JOIN tb_data c ON c.dat_cd = a.dat_cd\n" +
             "LEFT JOIN tb_consume e ON e.prj_cd = c.prj_cd\n" +
             "LEFT JOIN tb_project f ON f.prj_cd = c.prj_cd\n" +

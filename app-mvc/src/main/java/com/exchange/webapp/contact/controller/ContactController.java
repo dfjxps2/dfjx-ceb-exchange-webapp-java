@@ -3,7 +3,6 @@ package com.exchange.webapp.contact.controller;
 
 import com.exchange.webapp.contact.bean.ContactUser;
 import com.exchange.webapp.contact.service.ContactService;
-import com.exchange.webapp.util.R;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;

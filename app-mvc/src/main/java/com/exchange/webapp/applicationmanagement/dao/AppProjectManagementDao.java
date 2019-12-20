@@ -37,4 +37,7 @@ public interface AppProjectManagementDao {
 
     @Select("select prj_cd,prj_nm from tb_project")
     List<AppProjectManagement> apmanagementselectlist();
+
+    @Select("select count(1) from tb_project  where prj_cd =#{prj_cd}")
+    int selectprj_cd(@Param("prj_cd") String prj_cd);
 }
