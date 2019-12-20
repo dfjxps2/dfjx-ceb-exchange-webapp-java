@@ -1,10 +1,13 @@
 package com.exchange.webapp.monitor.dao;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.monitor.bean.LogStatus;
 import com.exchange.webapp.monitor.bean.TransportLog;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface LoggingDao {
 
@@ -64,28 +67,6 @@ public interface LoggingDao {
             "   order by a.dt desc </script>")
     Page<TransportLog> transportLogList(@Param("currPage") int currPage, @Param("pageSize")int pageSize,@Param("prj_cd") String prj_cd, @Param("mode")String mode, @Param("guanjianzi")String guanjianzi, @Param("status")String status);
 
-  /*  GROUP BY a.file_nm  order by a.dt  desc*/
- /*   @Select("<script>select *\n" +
-            "from \n" +
-            "(\n" +
-            "   SELECT\n" +
-            "\ta.file_nm,\n" +
-            "  a.dt,\n" +
-            "  a.status,\n" +
-            "  b.dat_nm,\n" +
-            "  c.prj_nm scnm,\n" +
-            "  e.prj_nm xfnm" +
-            "  FROM\n" +
-            "\ttb_log a\n" +
-            "LEFT JOIN tb_data b ON a.dat_cd = b.dat_cd\n" +
-            "LEFT JOIN tb_project c ON b.prj_cd = c.prj_cd\n" +
-            "LEFT JOIN tb_consume d ON d.dat_cd = b.dat_cd\n" +
-            "LEFT JOIN tb_project e ON e.prj_cd = d.prj_cd\n" +
-            "\twhere  a.mode = 0  and TO_DAYS(a.dt)=TO_DAYS(now()) " +
-            "<if test = \"prj_cd != null and prj_cd != ''\"> AND c.prj_cd = #{prj_cd} </if>" +
-            "<if test = \"guanjianzi != null and guanjianzi != ''\">AND a.file_nm like concat('%', #{guanjianzi},'%')  or   b.dat_nm like concat('%', #{guanjianzi},'%')</if>" +
-            " GROUP BY a.file_nm  \n" +
-            ") t order by t.dt desc </script>")*/
 
     @Select("<script>" +
             "select\n" +
@@ -139,4 +120,16 @@ public interface LoggingDao {
             "<if test = \"file_nm != null and file_nm != ''\">AND a.file_nm like concat('%', #{file_nm},'%')</if>" +
             "    order by a.dt desc</script>")
     Page<TransportLog> selectlogList(@Param("currPage")int currPage,@Param("pageSize") int pageSize,@Param("file_nm") String file_nm);
+
+
+    @Select("SELECT\n" +
+            "\tc.prj_cd,\n" +
+            "\tc.prj_nm\n" +
+            "FROM\n" +
+            "\ttb_log a\n" +
+            "LEFT JOIN tb_data b ON a.dat_cd = b.dat_cd\n" +
+            "LEFT JOIN tb_project c ON b.prj_cd = c.prj_cd\n" +
+            "GROUP BY\n" +
+            "\tc.prj_cd")
+    List<AppProjectManagement> datamanagementprojectlist();
 }

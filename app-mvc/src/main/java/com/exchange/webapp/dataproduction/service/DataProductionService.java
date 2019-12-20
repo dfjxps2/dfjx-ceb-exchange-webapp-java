@@ -1,5 +1,6 @@
 package com.exchange.webapp.dataproduction.service;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataproduction.bean.DataProduction;
 import com.webapp.support.page.PageResult;
 
@@ -20,4 +21,6 @@ public interface DataProductionService {
     int yanzhengpath(String storage_path);
 
     List<DataProduction> dataproductionselectxff(String prod_id);
+
+    List<AppProjectManagement> dataProductionprojrctlist();
 }

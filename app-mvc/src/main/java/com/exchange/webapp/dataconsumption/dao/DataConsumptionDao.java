@@ -1,8 +1,11 @@
 package com.exchange.webapp.dataconsumption.dao;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.bean.DataConsumption;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 
 public interface DataConsumptionDao {
@@ -53,4 +56,14 @@ public interface DataConsumptionDao {
 
     @Select("SELECT COUNT(1) FROM tb_agent WHERE workdir  like concat('%', #{storage_path},'%')")
     int yanzhengpath(@Param("storage_path")String storage_path);
+
+    @Select("SELECT\n" +
+            "\tt.prj_cd,\n" +
+            "\tp.prj_nm\n" +
+            "FROM\n" +
+            "\ttb_consume t\n" +
+            "LEFT JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "GROUP BY\n" +
+            "\tt.prj_cd\n")
+    List<AppProjectManagement> dataConsumptionprojectlist();
 }

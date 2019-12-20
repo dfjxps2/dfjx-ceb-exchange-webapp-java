@@ -1,6 +1,7 @@
 package com.exchange.webapp.dataconsumption.controller;
 
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.service.DataConsumptionService;
 import com.exchange.webapp.dataproduction.controller.CronExpression;
 import com.webapp.support.json.JsonSupport;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 /**
@@ -146,10 +148,27 @@ public class DataConsumptionController {
         try{
             dataConsumptionService.delpageContact(cons_id,flag);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
         }
-        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, "error");
+        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, "success");
     }
+
+
+    //数据消费项目下拉
+    @RequestMapping("/dataConsumptionprojectlist")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String dataConsumptionprojectlist(){
+        List<AppProjectManagement> contactPageDatas;
+        String jsonResult = "";
+        try{
+            contactPageDatas = dataConsumptionService.dataConsumptionprojectlist();
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "应用管理查看失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "应用管理查看成功", null, contactPageDatas);
+    }
+
 
 
 

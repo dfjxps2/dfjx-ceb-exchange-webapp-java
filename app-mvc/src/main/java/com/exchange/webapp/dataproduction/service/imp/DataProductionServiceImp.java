@@ -1,5 +1,6 @@
 package com.exchange.webapp.dataproduction.service.imp;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.service.imp.DataConsumptionServiceImp;
 import com.exchange.webapp.dataproduction.bean.DataProduction;
 import com.exchange.webapp.dataproduction.dao.DataProductionDao;
@@ -65,6 +66,11 @@ public class DataProductionServiceImp implements DataProductionService {
     @Override
     public List<DataProduction> dataproductionselectxff(String prod_id) {
         return dataProductionDao.dataproductionselectxff(prod_id);
+    }
+
+    @Override
+    public List<AppProjectManagement> dataProductionprojrctlist() {
+        return dataProductionDao.dataProductionprojrctlist();
     }
 
     @Override

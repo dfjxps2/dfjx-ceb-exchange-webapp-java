@@ -1,7 +1,6 @@
 package com.exchange.webapp.sysparametercfg.controller;
 
 
-import com.exchange.webapp.contact.bean.ContactUser;
 import com.exchange.webapp.sysparametercfg.bean.SysParameterCfg;
 import com.exchange.webapp.sysparametercfg.service.SysParameterCfgService;
 import com.webapp.support.json.JsonSupport;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * 系统参数配置Controller
+ * 配置Controller
  */
 @Controller
 @RequestMapping("/parameter")
@@ -58,6 +57,20 @@ public class SysParameterCfgController {
             @RequestParam("log_backup")int log_backup,
             @RequestParam("retries")int retries){
         String jsonResult = "";
+        if("0".equals(String.valueOf(id)) || "null".equals(id)  || id <= 0){
+                   return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "参数ID输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(heart_freq)) || "null".equals(heart_freq)  || heart_freq <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "心跳周期输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(file_backup)) || "null".equals(file_backup)  || file_backup <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件有效期输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(tran_timeout)) || "null".equals(tran_timeout)  || tran_timeout <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "传输超时时长输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(limit_rate)) || "null".equals(limit_rate)  || limit_rate <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "限速速率输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(log_backup)) || "null".equals(log_backup)  || log_backup <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "日志保存周期数输入类型有误", null, "error"); }
+        if("0".equals(String.valueOf(retries)) || "null".equals(retries)  || retries <= 0){
+                    return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "自动重试次数输入类型有误", null, "error"); }
         if(!aes_key.isEmpty() && !secret_key.isEmpty() ){
             try{
                 sysParameterCfgService.updateparameter(id,aes_key,secret_key,heart_freq,file_backup,tran_timeout,limit_rate,log_backup,retries);

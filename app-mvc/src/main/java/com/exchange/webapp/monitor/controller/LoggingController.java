@@ -1,6 +1,7 @@
 package com.exchange.webapp.monitor.controller;
 
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.monitor.service.LoggingService;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * 日志Controller
@@ -62,6 +65,22 @@ public class LoggingController {
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "transportLogstatusList列表有误", null, "error");
         }
         return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "transportLogstatusList列表成功", null, pageResult);
+    }
+
+
+    //日志首页项目下拉
+    @RequestMapping("/datamanagementprojectlist")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String datamanagementprojectlist(){
+        List<AppProjectManagement> contactPageDatas;
+        String jsonResult = "";
+        try{
+            contactPageDatas = loggingService.datamanagementprojectlist();
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "项目列表失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
     }
 
 

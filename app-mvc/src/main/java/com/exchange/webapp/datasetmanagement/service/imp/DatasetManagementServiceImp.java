@@ -1,6 +1,7 @@
 package com.exchange.webapp.datasetmanagement.service.imp;
 
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.service.imp.DataConsumptionServiceImp;
 import com.exchange.webapp.datasetmanagement.bean.DatasetManagement;
 import com.exchange.webapp.datasetmanagement.dao.DatasetManagementDao;
@@ -55,5 +56,10 @@ public class DatasetManagementServiceImp  implements DatasetManagementService {
     @Override
     public int selectkeymanagement(String dat_cd) {
         return datasetManagementDao.selectkeymanagement(dat_cd);
+    }
+
+    @Override
+    public List<AppProjectManagement> datamanagementprojectlist() {
+        return datasetManagementDao.datamanagementprojectlist();
     }
 }

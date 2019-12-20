@@ -1,6 +1,7 @@
 package com.exchange.webapp.datasetmanagement.controller;
 
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.datasetmanagement.bean.DatasetManagement;
 import com.exchange.webapp.datasetmanagement.service.DatasetManagementService;
 import com.webapp.support.json.JsonSupport;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +64,22 @@ public class DatasetManagementController {
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集查看失败", null, "error");
         }
         return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集查看成功", null, contactPageDatas);
+    }
+
+
+    //数据集项目下拉
+    @RequestMapping("/datamanagementprojectlist")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String datamanagementprojectlist(){
+        List<AppProjectManagement> contactPageDatas;
+        String jsonResult = "";
+        try{
+            contactPageDatas = datasetManagementService.datamanagementprojectlist();
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "项目列表失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
     }
 
 
@@ -158,16 +173,12 @@ public class DatasetManagementController {
         map.put("(", ")");
         char[] exp = expression.toCharArray();
         for (int i = 0; i < exp.length; i++) {
-            //如果是开始符号，则压入栈
-            if(exp[i] == '{' || exp[i] == '[' || exp[i] == '(') {
-                stack.push(exp[i]);
-            }
-            //如果是结束符号，则判断当前栈顶元素和该结束符号是否是对应关系
-            if(exp[i] == '}' || exp[i] == ']' || exp[i] == ')') {
+            if(exp[i] == '{' || exp[i] == '[' || exp[i] == '(') { //如果是开始符号，则压入栈
+                stack.push(exp[i]); }
+            if(exp[i] == '}' || exp[i] == ']' || exp[i] == ')') { //如果是结束符号，则判断当前栈顶元素和该结束符号是否是对应关系
                 String c = String.valueOf(stack.pop());
                 if(exp[i] != map.get(c).toCharArray()[0]) {
-                    return false;
-                }
+                    return false; }
             }
         }
         return true;

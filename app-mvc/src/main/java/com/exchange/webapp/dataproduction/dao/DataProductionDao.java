@@ -1,5 +1,6 @@
 package com.exchange.webapp.dataproduction.dao;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataproduction.bean.DataProduction;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
@@ -100,4 +101,15 @@ public interface DataProductionDao {
             "<if test = \"prod_id != null and prod_id != ''\"> AND a.prod_id = #{prod_id} </if>" +
             "</script>")
     List<DataProduction> dataproductionselectxff(@Param("prod_id")String prod_id);
+
+
+    @Select("SELECT\n" +
+            "\tt.prj_cd,\n" +
+            "\tp.prj_nm\n" +
+            "FROM\n" +
+            "\ttb_product t\n" +
+            "  LEFT JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            " GROUP BY\n" +
+            "\tt.prj_cd\n")
+    List<AppProjectManagement> dataProductionprojrctlist();
 }

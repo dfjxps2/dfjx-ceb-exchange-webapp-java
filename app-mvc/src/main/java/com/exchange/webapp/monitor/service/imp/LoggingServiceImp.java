@@ -1,5 +1,6 @@
 package com.exchange.webapp.monitor.service.imp;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.service.imp.DataConsumptionServiceImp;
 import com.exchange.webapp.monitor.bean.LogStatus;
 import com.exchange.webapp.monitor.bean.TransportLog;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service("loggingService")
@@ -60,5 +63,10 @@ public class LoggingServiceImp implements LoggingService {
         PageResult pageContactResult = PageResult.pageHelperList2PageResult(contactPageDatas);
         logger.debug("获取到的分页结果数据 --> {}",pageContactResult);
         return pageContactResult;
+    }
+
+    @Override
+    public List<AppProjectManagement> datamanagementprojectlist() {
+        return loggingDao.datamanagementprojectlist();
     }
 }

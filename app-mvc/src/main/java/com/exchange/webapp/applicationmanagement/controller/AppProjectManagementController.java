@@ -77,6 +77,8 @@ public class AppProjectManagementController {
 
 
 
+
+
     //新增
     @RequestMapping("/insertapmanagement")
     @ResponseBody
@@ -87,10 +89,12 @@ public class AppProjectManagementController {
             @RequestParam("prj_nm")String prj_nm,
             @RequestParam("prj_desc")String prj_desc){
         String jsonResult = "";
+        if("0".equals(String.valueOf(person_id)) || "null".equals(person_id)  || person_id <= 0){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "联系人输入类型有误", null, "error"); }
         int sd = 0;
         //查询项目标识是否已存在
         sd =   appProjectManagementService.selectprj_cd(prj_cd);
-        if (sd == 0){
+        if (sd != 0){
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "此应用项目标识已存在", null, "error");
         }
         if(!prj_cd.isEmpty() && !prj_nm.isEmpty()){
@@ -116,6 +120,8 @@ public class AppProjectManagementController {
             @RequestParam("prj_nm")String prj_nm,
             @RequestParam("prj_desc")String prj_desc){
         String jsonResult = "";
+        if("0".equals(String.valueOf(person_id)) || "null".equals(person_id)  || person_id <= 0){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "联系人输入类型有误", null, "error"); }
 
         if( !prj_nm.isEmpty()  && !prj_cd.isEmpty()){
             try{

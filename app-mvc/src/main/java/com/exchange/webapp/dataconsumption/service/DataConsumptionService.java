@@ -1,5 +1,6 @@
 package com.exchange.webapp.dataconsumption.service;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.bean.DataConsumption;
 import com.webapp.support.page.PageResult;
 
@@ -16,4 +17,6 @@ public interface DataConsumptionService {
     void updatedataconsumption(int cons_id, String cons_nm, String prj_cd, String dat_cd, String download_cron, String storage_path, String cons_desc, String flag);
 
     int yanzhengpath(String storage_path);
+
+    List<AppProjectManagement> dataConsumptionprojectlist();
 }

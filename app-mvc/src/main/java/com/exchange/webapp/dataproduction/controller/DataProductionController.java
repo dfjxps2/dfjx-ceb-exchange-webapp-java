@@ -1,6 +1,7 @@
 package com.exchange.webapp.dataproduction.controller;
 
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataproduction.bean.DataProduction;
 import com.exchange.webapp.dataproduction.service.DataProductionService;
 import com.webapp.support.json.JsonSupport;
@@ -202,6 +203,22 @@ public class DataProductionController {
             return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改失败", null, "error");
         }
         return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "修改成功", null, "success");
+    }
+
+
+    //数据生产项目下拉
+    @RequestMapping("/dataProductionprojrctlist")
+    @ResponseBody
+    @CrossOrigin(allowCredentials="true")
+    public String dataProductionprojrctlist(){
+        List<AppProjectManagement> contactPageDatas;
+        String jsonResult = "";
+        try{
+            contactPageDatas = dataProductionService.dataProductionprojrctlist();
+        }catch(Exception e){
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "项目列表失败", null, "error");
+        }
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
     }
 
 

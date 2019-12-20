@@ -1,5 +1,6 @@
 package com.exchange.webapp.datasetmanagement.service;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.datasetmanagement.bean.DatasetManagement;
 import com.webapp.support.page.PageResult;
 
@@ -17,4 +18,6 @@ public interface DatasetManagementService {
     List<DatasetManagement> datamanagementselectlist();
 
     int selectkeymanagement(String dat_cd);
+
+ List<AppProjectManagement> datamanagementprojectlist();
 }

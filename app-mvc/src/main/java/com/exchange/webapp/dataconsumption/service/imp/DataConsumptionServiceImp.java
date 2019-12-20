@@ -1,5 +1,6 @@
 package com.exchange.webapp.dataconsumption.service.imp;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.bean.DataConsumption;
 import com.exchange.webapp.dataconsumption.dao.DataConsumptionDao;
 import com.exchange.webapp.dataconsumption.service.DataConsumptionService;
@@ -58,6 +59,11 @@ public class DataConsumptionServiceImp implements DataConsumptionService {
     @Override
     public int yanzhengpath(String storage_path) {
         return dataConsumptionDao.yanzhengpath(storage_path);
+    }
+
+    @Override
+    public List<AppProjectManagement> dataConsumptionprojectlist() {
+        return dataConsumptionDao.dataConsumptionprojectlist();
     }
 
 

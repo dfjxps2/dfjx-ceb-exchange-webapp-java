@@ -1,5 +1,6 @@
 package com.exchange.webapp.datasetmanagement.dao;
 
+import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.datasetmanagement.bean.DatasetManagement;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
@@ -50,4 +51,15 @@ public interface DatasetManagementDao {
 
     @Select("select count(1) from tb_data where dat_cd = #{dat_cd} ")
     int selectkeymanagement(@Param("dat_cd") String dat_cd);
+
+
+    @Select("SELECT\n" +
+            "\tt.prj_cd,\n" +
+            "\tp.prj_nm\n" +
+            "FROM\n" +
+            "\ttb_data t\n" +
+            "LEFT JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "GROUP BY\n" +
+            "\tt.prj_cd\n")
+    List<AppProjectManagement> datamanagementprojectlist();
 }
