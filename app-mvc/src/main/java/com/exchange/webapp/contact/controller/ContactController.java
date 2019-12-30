@@ -93,7 +93,7 @@ public class ContactController {
             @RequestParam("person_tel")String person_tel,
             @RequestParam("person_email")String person_email){
         String jsonResult = "";
-        if(!person_nm.isEmpty() && !person_tel.isEmpty() && !person_email.isEmpty()){
+        if(!person_nm.isEmpty() && !person_tel.isEmpty() ){
             try{
                 contactService.insertpageContact(person_nm,person_tel,person_email);
             }catch(Exception e){
@@ -118,7 +118,7 @@ public class ContactController {
             @RequestParam("person_tel")String person_tel,
             @RequestParam("person_email")String person_email){
         String jsonResult = "";
-        if(!person_nm.isEmpty() && !person_tel.isEmpty() && !person_email.isEmpty()){
+        if(!person_nm.isEmpty() && !person_tel.isEmpty() ){
             try{
                 contactService.updatepageContact(person_id,person_nm,person_tel,person_email);
             }catch(Exception e){

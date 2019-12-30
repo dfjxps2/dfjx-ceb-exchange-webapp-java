@@ -58,7 +58,7 @@ public interface DatasetManagementDao {
             "\tp.prj_nm\n" +
             "FROM\n" +
             "\ttb_data t\n" +
-            "LEFT JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "INNER JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
             "GROUP BY\n" +
             "\tt.prj_cd\n")
     List<AppProjectManagement> datamanagementprojectlist();

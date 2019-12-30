@@ -33,8 +33,8 @@ public interface DataConsumptionDao {
             "LEFT JOIN tb_person d ON d.person_id = c.person_id\n" +
             "  WHERE\n" +
             "\t  1 = 1" +
-            "<if test = \"prj_cd != null and prj_cd != ''\"> AND a.prj_cd = #{prj_cd} </if>" +
-            "<if test = \"cons_nm != null and cons_nm != ''\">AND a.cons_nm like concat('%', #{cons_nm},'%')  or   a.cons_nm like concat('%', #{cons_nm},'%')</if>" +
+            "<if test = \"p rj_cd != null and prj_cd != ''\"> AND a.prj_cd = #{prj_cd} </if>" +
+            "<if test = \"cons_nm != null and cons_nm != ''\"> AND a.cons_nm like concat('%', #{cons_nm},'%')  or   a.cons_nm like concat('%', #{cons_nm},'%')</if>" +
             "</script>")
     Page<DataConsumption> dataconsumptionList(@Param("currPage") int currPage, @Param("pageSize") int pageSize, @Param("prj_cd")String prj_cd, @Param("cons_nm")String cons_nm);
 
@@ -62,7 +62,7 @@ public interface DataConsumptionDao {
             "\tp.prj_nm\n" +
             "FROM\n" +
             "\ttb_consume t\n" +
-            "LEFT JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "INNER JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
             "GROUP BY\n" +
             "\tt.prj_cd\n")
     List<AppProjectManagement> dataConsumptionprojectlist();
