@@ -28,12 +28,12 @@ public class AutoSpeechRecognitionController extends AbstractClientController{
 
     Logger logger = LoggerFactory.getLogger(AutoSpeechRecognitionController.class);
 
-    private final static String pythonHost = "https://127.0.0.1:8443";
+    private final static String pythonHost = "http://192.168.175.140:8010";
 //    private final static String pythonHost = "http://192.168.1.184:8888";
 
     private HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
 
-    @RequestMapping(path = "/dictionary/**",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
+    @RequestMapping(path = "/server/**",method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
     @ResponseBody
     @CrossOrigin(allowCredentials="true")
     public String nlpRequest(HttpServletRequest request) throws IOException, URISyntaxException, ServletException {

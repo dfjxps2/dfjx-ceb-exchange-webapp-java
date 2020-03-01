@@ -59,7 +59,7 @@ public class DataProductionController {
         List<DataProduction> contactPageDatas;
         String jsonResult = "";
         if ("".equals(prod_id)){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "生产计划ID为空", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "ID为空", null, "error");
         }
         try{
             contactPageDatas = dataProductionService.dataproductionselect(prod_id);
