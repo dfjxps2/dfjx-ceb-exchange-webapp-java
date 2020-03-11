@@ -3,6 +3,7 @@ package com.exchange.webapp.monitor.controller;
 
 import com.exchange.webapp.monitor.bean.Tbserver;
 import com.exchange.webapp.monitor.service.MonitorService;
+import com.webapp.support.httpClient.HttpClientSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
@@ -53,7 +54,9 @@ public class MonitorController {
         List<Tbserver> pageDatas = null;
         String jsonResult = "";
         try{
-            pageDatas = monitorService.tbserverselect();
+          String   pythonHost = "http://192.168.175.140:8010/server/status";
+          HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
+          pageDatas = monitorService.tbserverselect();
         }catch(Exception e){
             jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
         }
