@@ -1,5 +1,4 @@
-package com.datarecord.webapp.utils;
-
+package com.exchange.webapp.util;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.webapp.support.httpClient.HttpClientSupport;
