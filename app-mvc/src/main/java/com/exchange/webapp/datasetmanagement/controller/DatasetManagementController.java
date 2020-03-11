@@ -164,7 +164,7 @@ public class DatasetManagementController {
         return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, "success");
     }
 
-    //验证表达式是否有效
+    //验证正则表达式是否有效
     public static boolean valid(String expression) {
         //定义一个栈数据结构
         ArrayStack stack = new ArrayStack(expression.length());
