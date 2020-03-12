@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 监控Controller
@@ -56,6 +57,11 @@ public class MonitorController {
         try{
           String   pythonHost = "http://192.168.175.140:8010/server/status";
           HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
+          Map<String,Object> params = null;
+          httpClientSupport.sendPost(pythonHost,params);
+
+
+
           pageDatas = monitorService.tbserverselect();
         }catch(Exception e){
             jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
