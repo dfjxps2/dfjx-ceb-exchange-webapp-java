@@ -55,15 +55,14 @@ public class MonitorController {
         List<Tbserver> pageDatas = null;
         String jsonResult = "";
         try{
-          String   pythonHost = "http://192.168.175.140:8010/server/status";
-          HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
-          Map<String,Object> params = null;
-          httpClientSupport.sendPost(pythonHost,params);
-
-
+            Map<String,Object> params = new HashMap<String,Object>();
+            String pythonHost = "http://192.168.175.140:8010";
+            HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
+            httpClientSupport.sendRequest("/server/status",params,RequestMethod.POST,true);
 
           pageDatas = monitorService.tbserverselect();
         }catch(Exception e){
+            e.printStackTrace();
             jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
         }
         jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, pageDatas);
