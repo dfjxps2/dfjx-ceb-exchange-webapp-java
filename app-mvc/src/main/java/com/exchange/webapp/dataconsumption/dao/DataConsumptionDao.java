@@ -65,4 +65,7 @@ public interface DataConsumptionDao {
             "GROUP BY\n" +
             "\tprj_cd\n")
     List<AppProjectManagement> dataConsumptionprojectlist();
+
+    @Select("select max(cons_id) from tb_consume " )
+    int selectmaxconsid();
 }

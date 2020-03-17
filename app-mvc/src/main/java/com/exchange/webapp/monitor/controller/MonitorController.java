@@ -3,17 +3,16 @@ package com.exchange.webapp.monitor.controller;
 
 import com.exchange.webapp.monitor.bean.Tbserver;
 import com.exchange.webapp.monitor.service.MonitorService;
+import com.exchange.webapp.util.UrlPython;
 import com.webapp.support.httpClient.HttpClientSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +54,10 @@ public class MonitorController {
         List<Tbserver> pageDatas = null;
         String jsonResult = "";
         try{
-            Map<String,Object> params = new HashMap<String,Object>();
-            String pythonHost = "http://192.168.175.140:8010";
+            Map<String,Object> params = new HashMap();
+            String pythonHost = UrlPython.PYTHONHOST;
             HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
-            httpClientSupport.sendRequest("/server/status",params,RequestMethod.POST,true);
+            httpClientSupport.sendRequest("/server/status",params, RequestMethod.POST,true);
 
           pageDatas = monitorService.tbserverselect();
         }catch(Exception e){

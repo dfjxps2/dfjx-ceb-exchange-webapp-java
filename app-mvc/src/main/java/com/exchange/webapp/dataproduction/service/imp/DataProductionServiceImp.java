@@ -74,6 +74,11 @@ public class DataProductionServiceImp implements DataProductionService {
     }
 
     @Override
+    public int selectmaxprojid() {
+        return dataProductionDao.selectmaxprojid();
+    }
+
+    @Override
     public void delproduction(int prod_id,int flag) {
         dataProductionDao.delproduction(prod_id,flag);
     }

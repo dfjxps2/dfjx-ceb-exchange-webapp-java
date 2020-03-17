@@ -66,5 +66,10 @@ public class DataConsumptionServiceImp implements DataConsumptionService {
         return dataConsumptionDao.dataConsumptionprojectlist();
     }
 
+    @Override
+    public int selectmaxconsid() {
+        return dataConsumptionDao.selectmaxconsid();
+    }
+
 
 }

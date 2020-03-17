@@ -23,4 +23,6 @@ public interface DataProductionService {
     List<DataProduction> dataproductionselectxff(String prod_id);
 
     List<AppProjectManagement> dataProductionprojrctlist();
+
+    int selectmaxprojid();
 }

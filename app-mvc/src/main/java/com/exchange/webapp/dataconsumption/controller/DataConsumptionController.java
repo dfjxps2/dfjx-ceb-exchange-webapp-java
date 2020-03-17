@@ -4,18 +4,19 @@ package com.exchange.webapp.dataconsumption.controller;
 import com.exchange.webapp.applicationmanagement.bean.AppProjectManagement;
 import com.exchange.webapp.dataconsumption.service.DataConsumptionService;
 import com.exchange.webapp.dataproduction.controller.CronExpression;
+import com.exchange.webapp.util.UrlPython;
+import com.webapp.support.httpClient.HttpClientSupport;
 import com.webapp.support.json.JsonSupport;
 import com.webapp.support.jsonp.JsonResult;
 import com.webapp.support.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -84,6 +85,12 @@ public class DataConsumptionController {
             }
             try{
                 dataConsumptionService.insertdataconsumption(cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
+                int maxconsid = dataConsumptionService.selectmaxconsid();
+                Map<String,Object> params = new HashMap();
+                String pythonHost = UrlPython.PYTHONHOST;
+                HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
+                params.put("id",maxconsid);
+                httpClientSupport.sendRequest("/config/consume/update",params, RequestMethod.POST,true);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据消费失败", null, "error");
             }
@@ -125,6 +132,11 @@ public class DataConsumptionController {
             }
             try{
                 dataConsumptionService.updatedataconsumption(cons_id,cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
+                Map<String,Object> params = new HashMap();
+                String pythonHost = UrlPython.PYTHONHOST;
+                HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
+                params.put("id",cons_id);
+                httpClientSupport.sendRequest("/config/consume/update",params, RequestMethod.POST,true);
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费修改失败", null, "error");
             }

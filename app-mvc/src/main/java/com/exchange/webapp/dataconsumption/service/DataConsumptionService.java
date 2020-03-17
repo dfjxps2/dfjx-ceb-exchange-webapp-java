@@ -19,4 +19,6 @@ public interface DataConsumptionService {
     int yanzhengpath(String storage_path);
 
     List<AppProjectManagement> dataConsumptionprojectlist();
+
+    int selectmaxconsid();
 }

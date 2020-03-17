@@ -104,12 +104,15 @@ public interface DataProductionDao {
 
 
     @Select("SELECT\n" +
-            "\tt.prj_cd,\n" +
-            "\tp.prj_nm\n" +
-            "FROM\n" +
-            "\ttb_product t\n" +
-            "  INNER JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "\tprj_cd,\n" +
+            "\tprj_nm\n" +
+            " FROM\n" +
+            "  tb_project " +
             " GROUP BY\n" +
-            "\tt.prj_cd\n")
+            "\tprj_cd\n")
     List<AppProjectManagement> dataProductionprojrctlist();
+
+
+    @Select("select max(prod_id) from  tb_product ")
+    int selectmaxprojid();
 }
