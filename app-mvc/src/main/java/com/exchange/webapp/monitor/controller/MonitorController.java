@@ -58,13 +58,16 @@ public class MonitorController {
             String pythonHost = UrlPython.PYTHONHOST;
             HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
             httpClientSupport.sendRequest("/server/status",params, RequestMethod.POST,true);
-
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        try{
           pageDatas = monitorService.tbserverselect();
         }catch(Exception e){
             e.printStackTrace();
-            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
+          return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "Tbserver失败", null, "error");
         }
-        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, pageDatas);
+        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "Tbserver成功", null, pageDatas);
 
         return jsonResult;
     }

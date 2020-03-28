@@ -11,11 +11,9 @@ public interface IContactDao {
     @Select("select person_id,person_nm,person_tel,person_email,create_time,update_time from tb_person")
     Page<ContactUser> pageContact(@Param("currPage") int currPage, @Param("pageSize") int pageSize);
 
-    @Select("SELECT MAX(person_id)+1 FROM tb_person")
-    int countuser();
 
-    @Insert("INSERT INTO tb_person (person_id,person_nm,person_tel,person_email,create_time,update_time) VALUES(#{person_id},#{person_nm},#{person_tel},#{person_email},NOW(),NOW())")
-    void insertpageContact(@Param("person_id")int person_id,@Param("person_nm") String person_nm,@Param("person_tel") String person_tel,@Param("person_email") String person_email);
+    @Insert("INSERT INTO tb_person (person_nm,person_tel,person_email,create_time,update_time) VALUES(#{person_nm},#{person_tel},#{person_email},NOW(),NOW())")
+    void insertpageContact(@Param("person_nm") String person_nm,@Param("person_tel") String person_tel,@Param("person_email") String person_email);
 
 
     @Update("UPDATE tb_person SET  person_nm =#{person_nm},person_tel=#{person_tel},person_email=#{person_email},update_time =NOW() WHERE person_id =#{person_id}")

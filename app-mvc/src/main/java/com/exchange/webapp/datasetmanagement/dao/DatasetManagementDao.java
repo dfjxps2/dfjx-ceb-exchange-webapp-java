@@ -54,12 +54,11 @@ public interface DatasetManagementDao {
 
 
     @Select("SELECT\n" +
-            "\tt.prj_cd,\n" +
-            "\tp.prj_nm\n" +
-            "FROM\n" +
-            "\ttb_data t\n" +
-            "INNER JOIN tb_project p ON t.prj_cd = p.prj_cd\n" +
+            "\tprj_cd,\n" +
+            "\tprj_nm\n" +
+            " FROM\n" +
+            " tb_project \n" +
             "GROUP BY\n" +
-            "\tt.prj_cd\n")
+            "\tprj_cd\n")
     List<AppProjectManagement> datamanagementprojectlist();
 }

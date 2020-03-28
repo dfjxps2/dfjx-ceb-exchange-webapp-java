@@ -32,8 +32,7 @@ public class ContactServiceImp implements ContactService {
 
     @Override
     public void insertpageContact( String person_nm, String person_tel, String person_email) {
-          int  person_id = contactDao.countuser();
-        contactDao.insertpageContact(person_id,person_nm,person_tel,person_email);
+        contactDao.insertpageContact(person_nm,person_tel,person_email);
     }
 
     @Override

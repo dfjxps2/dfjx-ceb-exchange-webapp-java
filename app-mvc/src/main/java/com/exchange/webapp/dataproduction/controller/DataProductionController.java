@@ -44,9 +44,9 @@ public class DataProductionController {
         try{
             pageResult = dataProductionService.dataproductionList(currPage,pageSize,prj_cd,prod_nm);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据生产管理列表有误", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询数据消费管理列表成功", null, pageResult);
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询数据生产管理列表成功", null, pageResult);
     }
 
 

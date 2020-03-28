@@ -78,11 +78,11 @@ public class DataConsumptionController {
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
             }
-            int ss = 0;
+           /* int ss = 0;
             ss =   dataConsumptionService.yanzhengpath(storage_path);
             if(ss == 0){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "存储路径有误！", null, "error");
-            }
+            }*/
             try{
                 dataConsumptionService.insertdataconsumption(cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
                 int maxconsid = dataConsumptionService.selectmaxconsid();
@@ -125,11 +125,11 @@ public class DataConsumptionController {
             }catch(Exception e){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请使用正确的cron表达式", null, "error");
             }
-            int ss = 0;
+          /*  int ss = 0;
             ss =   dataConsumptionService.yanzhengpath(storage_path);
             if(ss == 0){
                 return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "存储路径有误！", null, "error");
-            }
+            }*/
             try{
                 dataConsumptionService.updatedataconsumption(cons_id,cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
                 Map<String,Object> params = new HashMap();
@@ -176,9 +176,9 @@ public class DataConsumptionController {
         try{
             contactPageDatas = dataConsumptionService.dataConsumptionprojectlist();
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "应用管理查看失败", null, "error");
+            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据消费项目下拉失败", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "应用管理查看成功", null, contactPageDatas);
+        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据消费项目下拉成功", null, contactPageDatas);
     }
 
 

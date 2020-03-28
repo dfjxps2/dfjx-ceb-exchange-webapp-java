@@ -39,11 +39,9 @@ public interface DataConsumptionDao {
     Page<DataConsumption> dataconsumptionList(@Param("currPage") int currPage, @Param("pageSize") int pageSize, @Param("prj_cd")String prj_cd, @Param("cons_nm")String cons_nm);
 
 
-    @Select("SELECT MAX(cons_id)+1 FROM tb_consume")
-    int countuser();
 
-    @Insert("INSERT INTO tb_consume (cons_id,cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,create_time,update_time,flag) VALUES(#{cons_id},#{cons_nm},#{prj_cd},#{dat_cd},#{download_cron},#{storage_path},#{cons_desc},NOW(),NOW(),#{flag})")
-    void insertdataconsumption(@Param("cons_id")int cons_id, @Param("cons_nm")String cons_nm,@Param("prj_cd") String prj_cd, @Param("dat_cd")String dat_cd, @Param("download_cron")String download_cron, @Param("storage_path")String storage_path, @Param("cons_desc")String cons_desc, @Param("flag")String flag);
+    @Insert("INSERT INTO tb_consume (cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,create_time,update_time,flag) VALUES(#{cons_nm},#{prj_cd},#{dat_cd},#{download_cron},#{storage_path},#{cons_desc},NOW(),NOW(),#{flag})")
+    void insertdataconsumption(@Param("cons_nm")String cons_nm,@Param("prj_cd") String prj_cd, @Param("dat_cd")String dat_cd, @Param("download_cron")String download_cron, @Param("storage_path")String storage_path, @Param("cons_desc")String cons_desc, @Param("flag")String flag);
 
 
     @Update("UPDATE tb_consume SET  cons_nm =#{cons_nm},prj_cd=#{prj_cd},dat_cd=#{dat_cd},download_cron=#{download_cron},storage_path=#{storage_path},cons_desc=#{cons_desc},update_time =NOW(),flag = #{flag} WHERE cons_id =#{cons_id}")

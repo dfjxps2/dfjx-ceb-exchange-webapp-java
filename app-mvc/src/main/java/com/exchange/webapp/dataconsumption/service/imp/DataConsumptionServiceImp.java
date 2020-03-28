@@ -43,8 +43,7 @@ public class DataConsumptionServiceImp implements DataConsumptionService {
         if ("".equals(flag) || flag == null){
             flag = "1";
         }
-        int  cons_id = dataConsumptionDao.countuser();
-        dataConsumptionDao.insertdataconsumption(cons_id,cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
+        dataConsumptionDao.insertdataconsumption(cons_nm,prj_cd,dat_cd,download_cron,storage_path,cons_desc,flag);
     }
 
     @Override
