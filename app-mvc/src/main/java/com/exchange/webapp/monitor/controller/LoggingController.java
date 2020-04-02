@@ -38,13 +38,12 @@ public class LoggingController {
             @RequestParam("status")String status  //运行状态
     ){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
             pageResult = loggingService.transportLogList(currPage,pageSize,prj_cd,mode,guanjianzi,status);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "transportLog列表有误", null, e);
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "transportLog列表有误", null, e);
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "transportLog列表成功", null, pageResult);
+        return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "transportLog列表成功", null, pageResult);
     }
 
 
@@ -58,13 +57,12 @@ public class LoggingController {
             @RequestParam("guanjianzi")String guanjianzi  //关键字
     ){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
             pageResult = loggingService.transportLogstatusList(currPage,pageSize,guanjianzi);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "transportLogstatusList列表有误", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "transportLogstatusList列表有误", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "transportLogstatusList列表成功", null, pageResult);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "transportLogstatusList列表成功", null, pageResult);
     }
 
 
@@ -74,13 +72,12 @@ public class LoggingController {
     @CrossOrigin(allowCredentials="true")
     public String datamanagementprojectlist(){
         List<AppProjectManagement> contactPageDatas;
-        String jsonResult = "";
         try{
             contactPageDatas = loggingService.datamanagementprojectlist();
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "项目列表失败", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "日志首页项目下拉失败", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "日志首页项目下拉成功", null, contactPageDatas);
     }
 
 
@@ -95,13 +92,12 @@ public class LoggingController {
             @RequestParam("file_nm")String file_nm  //关键字
     ){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
             pageResult = loggingService.selectlogList(currPage,pageSize,file_nm);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查看日志有误", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查看日志有误", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查看日志成功", null, pageResult);
+        return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查看日志成功", null, pageResult);
     }
 
 

@@ -42,13 +42,12 @@ public class DatasetManagementController {
             @RequestParam("bsornm")String bsornm
     ){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
             pageResult = datasetManagementService.datamanagementList(currPage,pageSize,prj_cd,bsornm);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据消费管理列表有误", null, "error");
+            return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询数据集管理列表有误", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询数据消费管理列表成功", null, pageResult);
+        return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询数据集管理列表成功", null, pageResult);
     }
 
 
@@ -59,13 +58,12 @@ public class DatasetManagementController {
     @CrossOrigin(allowCredentials="true")
     public String datamanagementselectlist(){
         List<DatasetManagement> contactPageDatas;
-        String jsonResult = "";
         try{
             contactPageDatas = datasetManagementService.datamanagementselectlist();
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集查看失败", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集下拉失败", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集查看成功", null, contactPageDatas);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集下拉成功", null, contactPageDatas);
     }
 
 
@@ -75,13 +73,12 @@ public class DatasetManagementController {
     @CrossOrigin(allowCredentials="true")
     public String datamanagementprojectlist(){
         List<AppProjectManagement> contactPageDatas;
-        String jsonResult = "";
         try{
             contactPageDatas = datasetManagementService.datamanagementprojectlist();
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "项目列表失败", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集项目下拉失败", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
+        return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集项目下拉成功", null, contactPageDatas);
     }
 
 
@@ -95,25 +92,24 @@ public class DatasetManagementController {
             @RequestParam("dat_nm")String dat_nm,
             @RequestParam("file_regexp")String file_regexp,
             @RequestParam("dat_desc")String dat_desc){
-        String jsonResult = "";
         boolean ss = false;
         ss =  valid(file_regexp);
-        if (ss == false){return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
+        if (ss == false){return     JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
         if(!dat_cd.isEmpty() && !prj_cd.isEmpty() && !dat_nm.isEmpty()  && !file_regexp.isEmpty()){
             int  i=0;
              i =   datasetManagementService.selectkeymanagement(dat_cd);
             if(i != 0){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集标识已存在", null, "error");
+                return     JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集标识已存在", null, "error");
             }
             try{
                 datasetManagementService.insertmanagement(dat_cd,prj_cd,dat_nm,file_regexp,dat_desc);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据集失败", null, "error");
+                return     JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增数据集失败", null, "error");
             }
         }else{
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
+            return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增数据集成功", null, "success");
+        return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增数据集成功", null, "success");
     }
 
 
@@ -127,21 +123,20 @@ public class DatasetManagementController {
             @RequestParam("dat_nm")String dat_nm,
             @RequestParam("file_regexp")String file_regexp,
             @RequestParam("dat_desc")String dat_desc){
-        String jsonResult = "";
        // try{Window.RegExp('abc)')}catch(e){alert(e)}
         boolean ss = false;
         ss =  valid(file_regexp);
-        if (ss == false){return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
+        if (ss == false){return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "文件名命名规则无效", null, "error"); }
         if(!dat_cd.isEmpty() && !prj_cd.isEmpty() && !dat_nm.isEmpty()  && !file_regexp.isEmpty()){
             try{
                 datasetManagementService.updatemanagement(dat_cd,prj_cd,dat_nm,file_regexp,dat_desc);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集修改失败", null, "error");
+                return     JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "数据集修改失败", null, "error");
             }
         }else{
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
+            return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集修改成功", null, "success");
+        return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "数据集修改成功", null, "success");
     }
 
 
@@ -154,14 +149,12 @@ public class DatasetManagementController {
             @RequestParam("dat_cd") String dat_cd,
             @RequestParam("flag") int flag
     ){
-        String jsonResult = "";
-
         try{
             datasetManagementService.delmanagement(dat_cd,flag);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
         }
-        return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, "success");
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, "success");
     }
 
     //验证表达式是否有效

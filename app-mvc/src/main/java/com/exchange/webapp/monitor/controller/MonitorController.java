@@ -36,13 +36,12 @@ public class MonitorController {
             @RequestParam("pageSize")int pageSize
     ){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
             pageResult = monitorService.selectTbagentList(currPage,pageSize);
         }catch(Exception e){
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "Tbagent列表有误", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "Tbagent列表有误", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "Tbagent列表成功", null, pageResult);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "Tbagent列表成功", null, pageResult);
     }
 
 
@@ -52,7 +51,6 @@ public class MonitorController {
     @CrossOrigin(allowCredentials="true")
     public String tbserverselect(){
         List<Tbserver> pageDatas = null;
-        String jsonResult = "";
         try{
             Map<String,Object> params = new HashMap();
             String pythonHost = UrlPython.PYTHONHOST;
@@ -65,11 +63,10 @@ public class MonitorController {
           pageDatas = monitorService.tbserverselect();
         }catch(Exception e){
             e.printStackTrace();
-          return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "Tbserver失败", null, "error");
+          return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "Tbserver失败", null, "error");
         }
-        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "Tbserver成功", null, pageDatas);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "Tbserver成功", null, pageDatas);
 
-        return jsonResult;
     }
 
 

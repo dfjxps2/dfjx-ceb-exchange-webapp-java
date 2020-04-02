@@ -83,21 +83,20 @@ public interface DataProductionDao {
     @Select("SELECT COUNT(1) FROM tb_agent WHERE workdir  like concat('%', #{storage_path},'%')")
     int yanzhengpath(@Param("storage_path") String storage_path);
 
-    @Select("<script>SELECT\n" +
-            "\ta.prod_id,\n" +
-            "\ta.prod_nm,\n" +
-            "\ta.upload_cron,\n" +
-            "\te.cons_nm,\n" +
-            "\tb.prj_nm xfnm,\n" +
-            "\tf.prj_nm scnm\n" +
-            "FROM\n" +
-            "\ttb_product a\n" +
-            "LEFT JOIN tb_project b ON a.prj_cd = b.prj_cd\n" +
-            "LEFT JOIN tb_data c ON c.dat_cd = a.dat_cd\n" +
-            "LEFT JOIN tb_consume e ON e.prj_cd = c.prj_cd\n" +
-            "LEFT JOIN tb_project f ON f.prj_cd = c.prj_cd\n" +
-            "   WHERE \n" +
-            "\t 1 = 1  " +
+
+    @Select("<script>" +
+            "select      a.prod_id, " +
+            "            a.prod_nm, " +
+            "            a.upload_cron, " +
+            "            b.cons_nm, " +
+            "            e.prj_nm xfnm, " +
+            "            d.prj_nm scnm " +
+            " from  tb_product  a " +
+            "left  join tb_consume  b  ON b.dat_cd = a.dat_cd  " +
+            "inner JOIN tb_data     c  ON c.dat_cd = b.dat_cd  " +
+            "inner JOIN tb_project  d  ON d.prj_cd = a.prj_cd " +
+            "inner JOIN tb_project  e  ON e.prj_cd = b.prj_cd " +
+            "where 1=1 "+
             "<if test = \"prod_id != null and prod_id != ''\"> AND a.prod_id = #{prod_id} </if>" +
             "</script>")
     List<DataProduction> dataproductionselectxff(@Param("prod_id")String prod_id);

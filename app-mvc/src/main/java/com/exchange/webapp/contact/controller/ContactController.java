@@ -35,15 +35,12 @@ public class ContactController {
             @RequestParam("currPage") int currPage,
             @RequestParam("pageSize")int pageSize){
         PageResult pageResult = null;
-        String jsonResult = "";
         try{
              pageResult = contactService.pageContact(currPage,pageSize);
         }catch(Exception e){
-            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "获取联系人管理列表失败", null, "error");
+            return JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "获取联系人管理列表失败", null, "error");
         }
-         jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取联系人管理列表成功", null, pageResult);
-        return jsonResult;
-
+        return JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "获取联系人管理列表成功", null, pageResult);
     }
 
 
@@ -54,15 +51,13 @@ public class ContactController {
     public String pageContactselect(
             @RequestParam("person_id") int person_id){
         List<ContactUser> contactPageDatas = null;
-        String jsonResult = "";
         try{
             contactPageDatas = contactService.pageContactselect(person_id);
         }catch(Exception e){
-            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询联系人失败", null, "error");
+            return JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "查询联系人失败", null, "error");
         }
-        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询联系人成功", null, contactPageDatas);
+        return JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "查询联系人成功", null, contactPageDatas);
 
-        return jsonResult;
     }
 
 
@@ -76,11 +71,10 @@ public class ContactController {
         try{
             contactPageDatas = contactService.pageContactsxiala();
         }catch(Exception e){
-            jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "失败", null, "error");
         }
-        jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "成功", null, contactPageDatas);
 
-        return jsonResult;
     }
 
 
@@ -92,17 +86,16 @@ public class ContactController {
             @RequestParam("person_nm") String person_nm,
             @RequestParam("person_tel")String person_tel,
             @RequestParam("person_email")String person_email){
-        String jsonResult = "";
         if(!person_nm.isEmpty() && !person_tel.isEmpty() ){
             try{
                 contactService.insertpageContact(person_nm,person_tel,person_email);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增联系人失败", null, "error");
+                return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "新增联系人失败", null, "error");
             }
         }else{
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
+            return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增联系人成功", null, "success");
+        return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "新增联系人成功", null, "success");
 
     }
 
@@ -117,17 +110,16 @@ public class ContactController {
             @RequestParam("person_nm") String person_nm,
             @RequestParam("person_tel")String person_tel,
             @RequestParam("person_email")String person_email){
-        String jsonResult = "";
         if(!person_nm.isEmpty() && !person_tel.isEmpty() ){
             try{
                 contactService.updatepageContact(person_id,person_nm,person_tel,person_email);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改联系人失败", null, "error");
+                return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "修改联系人失败", null, "error");
             }
         }else{
-            return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
+            return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "修改联系人成功", null, "success");
+        return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "修改联系人成功", null, "success");
     }
 
 
@@ -138,13 +130,12 @@ public class ContactController {
     @CrossOrigin(allowCredentials="true")
     public String delpageContact(
             @RequestParam("person_id") int person_id){
-        String jsonResult = "";
         try{
                 contactService.delpageContact(person_id);
             }catch(Exception e){
-                return   jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除联系人失败", null, "error");
+                return   JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除联系人失败", null, "error");
             }
-        return  jsonResult = JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除联系人成功", null, "success");
+        return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除联系人成功", null, "success");
     }
 
 }

@@ -28,7 +28,7 @@ public class AutoSpeechRecognitionController extends AbstractClientController{
 
     Logger logger = LoggerFactory.getLogger(AutoSpeechRecognitionController.class);
 
-    private final static String pythonHost = "http://192.168.175.140:8010";
+    private final static String pythonHost = UrlPython.PYTHONHOST;
 //    private final static String pythonHost = "http://192.168.1.184:8888";
 
     private HttpClientSupport httpClientSupport = HttpClientSupport.getInstance(pythonHost);
