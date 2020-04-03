@@ -123,6 +123,7 @@ public class AppProjectManagementController {
             }catch(Exception e){
                 return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "应用管理修改失败", null, "error");
             }
+
         }else{
             return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "请确认必填项是否填写内容", null, "error");
         }
@@ -140,6 +141,7 @@ public class AppProjectManagementController {
         try{
             appProjectManagementService.delapmanagement(prj_cd);
         }catch(Exception e){
+
             return    JsonSupport.makeJsonResultStr(JsonResult.RESULT.FAILD, "删除失败", null, "error");
         }
         return  JsonSupport.makeJsonResultStr(JsonResult.RESULT.SUCCESS, "删除成功", null, "error");

@@ -8,7 +8,7 @@ public class Tbagent {
     private String     ip; //'ip地址',
     private int        agent_status; //'agent运行状态',
     private int        sftp_status; // 'SFTP检查',
-    private int        last_heart;// '最后心跳间隔',
+    private String        last_heart;// '最后心跳间隔',
     private String     version; //'运行版本',
     private String     start_time; // '本次启动时间',
     private String     workdir; //'路径',
@@ -71,11 +71,11 @@ public class Tbagent {
         this.sftp_status = sftp_status;
     }
 
-    public int getLast_heart() {
+    public String getLast_heart() {
         return last_heart;
     }
 
-    public void setLast_heart(int last_heart) {
+    public void setLast_heart(String last_heart) {
         this.last_heart = last_heart;
     }
 
